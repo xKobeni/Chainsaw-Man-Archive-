@@ -1,0 +1,22 @@
+/* Deliberate Japanese labels; English remains the visual hierarchy. */
+#pv b { font: clamp(150px, 22vw, 350px)/1 var(--d); writing-mode: horizontal-tb; }
+.ph { padding-bottom: 5vh; }
+.ph h1 span { margin-left: clamp(22px, 7vw, 120px); }
+.ph .jp { position: relative; top: auto; right: auto; display: block; width: fit-content; margin-top: 18px; color: var(--o); -webkit-text-stroke: 0; writing-mode: horizontal-tb; font-size: clamp(14px, 1.5vw, 21px); letter-spacing: .16em; line-height: 1.4; opacity: .9; }
+.st h3 { margin-left: 0; font-size: clamp(60px, 10vw, 160px); }
+.st .emb { width: min(36vw, 300px); top: 4vh; right: 2vw; opacity: .25; }
+.ad .l .n { right: 1vw; top: 1vw; bottom: auto; font: 24px/1 var(--m); opacity: .4; }
+.loc > .j { top: 3vh; right: 3vw; font-size: clamp(16px, 1.8vw, 24px) !important; letter-spacing: .16em; writing-mode: horizontal-tb; opacity: .75; }
+#v-characters .ph, #v-arcs .ph { padding: clamp(105px, 12vh, 145px) 5vw 30px; }
+#v-characters .ph h1, #v-arcs .ph h1 { width: fit-content; max-width: 100%; font-size: clamp(62px, 8.5vw, 128px); }
+#v-characters .ph h1 span, #v-arcs .ph h1 span { margin-left: clamp(16px, 5vw, 70px); }
+#v-characters .ph .jp, #v-arcs .ph .jp { margin-top: 12px; font-size: clamp(14px, 1.3vw, 18px); }
+@media (max-width: 760px) {
+  .ph .jp { font-size: 15px; margin-top: 14px; opacity: .9; }
+  .ph h1 span { margin-left: 6vw; }
+  .st h3 { font-size: clamp(55px, 13vw, 95px); }
+  .st .emb { width: min(55vw, 230px); top: 10vh; right: 0; }
+  .loc > .j { right: 6vw; top: 4vh; }
+  #v-characters .ph, #v-arcs .ph { padding-top: 112px; padding-bottom: 24px; }
+  #v-characters .ph h1, #v-arcs .ph h1 { font-size: clamp(58px, 15vw, 94px); }
+}

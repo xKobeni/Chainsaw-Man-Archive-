@@ -1,0 +1,80 @@
+/* ===== AUDIT FIXES + MOTION SUPPORT ===== */
+:root{
+--gl:#A8A49E}
+
+header{
+z-index:75}
+
+#ml li{
+overflow:hidden}
+
+.note,.at button,.cl button{
+color:var(--gl)}
+
+#pv span{
+font-size:12px}
+
+.ph h1{
+position:relative;
+z-index:1}
+
+.loc svg{
+left:-10%;
+width:120%;
+opacity:.5}
+
+#pf .top h2{
+overflow:hidden;
+padding:.06em 0}
+
+
+
+.emb{
+position:absolute;
+right:-8vw;
+top:-6vw;
+width:min(70vw,540px);
+z-index:0;
+opacity:.95;
+pointer-events:none}
+
+
+
+
+#wk{
+position:fixed;
+inset:0;
+background:var(--k);
+z-index:94;
+pointer-events:none;
+clip-path:polygon(-20% 0,-10% 0,-30% 100%,-40% 100%)}
+
+.rv{
+opacity:1;
+transform:none;
+transition:none}
+
+#wp{
+transition:none}
+
+.ch{
+display:inline-block}
+
+@media(max-width:760px){
+.st h3,.ad .l h3,.fl h3{
+margin-left:0}
+.fl{
+margin-right:0}
+.lr div:nth-child(even){
+margin-left:0}
+.ph h1 span{
+margin-left:6vw}
+.loc,.loc:nth-child(n){
+flex-basis:88vw}
+.emb{
+width:90vw}
+.ph .jp{
+font-size:34vw;
+opacity:.35}
+}
+

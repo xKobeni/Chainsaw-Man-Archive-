@@ -1,0 +1,180 @@
+/* ===== ART-DIRECTION PASS ===== */
+/* page heads: broken, indented, slashed */
+.ph h1{
+margin-left:-.04em}
+
+.ph h1 span{
+display:block;
+margin-left:14vw;
+margin-top:.06em;
+background:var(--r);
+color:var(--k);
+padding:0 .12em;
+width:max-content;
+transform:skewX(-7deg)}
+
+.ph .jp{
+opacity:.9;
+color:transparent;
+-webkit-text-stroke:1.5px var(--g);
+font-size:clamp(70px,16vw,260px);
+top:6vh;
+right:2vw}
+
+/* characters: no box. type is the stage */
+.cs{
+grid-template-columns:minmax(200px,.7fr) 2.4fr}
+
+.cl{
+counter-reset:n;
+border-left:3px solid var(--r);
+padding-left:16px}
+
+.cl button::before{
+counter-increment:n;
+content:"0" counter(n);
+font:11px var(--m);
+color:var(--r);
+margin-right:12px;
+vertical-align:top}
+
+.st{
+background:none!important;
+border:0;
+clip-path:none;
+color:var(--w)!important;
+padding:0;
+overflow:visible}
+
+
+
+.st h3{
+color:var(--c);
+-webkit-text-stroke:1.5px var(--w);
+font-size:clamp(60px,13vw,230px);
+margin-left:-6vw;
+z-index:1;
+text-shadow:6px 6px 0 var(--k)}
+
+.st .c,.st p,.st .btn{
+position:relative;
+z-index:1}
+
+.st .c{
+color:var(--c)}
+
+.st .btn{
+background:var(--w);
+color:var(--k)}
+
+/* devils: stamped dossier with giant cropped file number */
+.fl{
+transform:rotate(-1.4deg);
+margin-right:-2vw}
+
+
+
+.fl h3{
+margin-left:-1.5vw}
+
+.dl button{
+font-size:12px}
+
+.dl{
+border-right:3px solid var(--r);
+padding-right:12px}
+
+/* arcs: ledger rail + outlined colossal title */
+.at{
+border-top:2px solid var(--g);
+border-bottom:2px solid var(--g);
+gap:0;
+padding:0 5vw}
+
+.at button{
+background:none;
+font-size:18px;
+border-right:1px solid var(--g);
+color:var(--g)}
+
+.at button.on,.at button:hover{
+background:none;
+color:var(--r);
+box-shadow:inset 0 -5px 0 var(--r)}
+
+.ad{
+border:0;
+grid-template-columns:2fr 1fr;
+margin-top:2vh;
+position:relative}
+
+.ad .l{
+background:none!important;
+color:var(--w)!important;
+clip-path:none;
+padding:2vw 0;
+overflow:visible}
+
+.ad .l h3{
+color:var(--c);
+-webkit-text-stroke:2px var(--w);
+font-size:clamp(54px,12vw,210px);
+margin-left:-2vw;
+text-shadow:8px 8px 0 var(--k)}
+
+.ad .l .n{
+color:var(--c);
+opacity:.35;
+font-size:clamp(180px,34vw,520px);
+right:-2vw;
+bottom:-10vw}
+
+.ad .r{
+border-left:3px solid var(--r);
+z-index:1;
+background:var(--k)}
+
+/* world: staggered, unequal plates with vertical place names */
+.hz{
+align-items:flex-start;
+gap:0;
+padding-bottom:6vh}
+
+.loc{
+border:0;
+clip-path:polygon(0 0,100% 4%,96% 100%,0 96%)}
+
+.loc:nth-child(even){
+margin-top:9vh;
+flex-basis:min(66vw,620px);
+height:62vh;
+clip-path:polygon(4% 0,100% 0,100% 94%,0 100%)}
+
+.loc:nth-child(3n){
+flex-basis:min(92vw,980px)}
+
+.loc>.j{
+position:absolute!important;
+right:2vw;
+top:2vh;
+writing-mode:vertical-rl;
+font-size:clamp(70px,13vw,200px)!important;
+opacity:.28;
+line-height:1}
+
+/* lore: contracts as stamped seals between oversized names */
+.lr div:nth-child(even){
+margin-left:10vw}
+
+.lr em{
+border-radius:50%;
+width:110px;
+height:110px;
+display:grid;
+place-items:center;
+padding:10px;
+transform:rotate(-12deg);
+background:var(--r);
+color:var(--k);
+border-color:var(--w)}
+

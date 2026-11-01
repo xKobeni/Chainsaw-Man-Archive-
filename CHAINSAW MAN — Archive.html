@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CHAINSAW MAN — Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Serif+JP:wght@700;900&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--k:#111;--w:#F0EEE8;--r:#CF262D;--o:#E48B36;--g:#76736F;--d:Anton,Impact,"Arial Narrow",sans-serif;--j:"Noto Serif JP","Hiragino Mincho ProN",serif;--m:"Space Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--k);scroll-behavior:smooth}
+body{background:var(--k);color:var(--w);font:15px/1.6 var(--m);overflow-x:hidden;padding-top:env(safe-area-inset-top,0px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.12;background:radial-gradient(#fff 1px,transparent 1.5px) 0 0/5px 5px;mix-blend-mode:overlay}
+a,button{color:inherit;font:inherit;background:none;border:0;cursor:pointer;text-decoration:none}
+:focus-visible{outline:3px solid var(--o);outline-offset:3px}
+.d{font-family:var(--d);text-transform:uppercase;line-height:.88;letter-spacing:.01em}
+.j{font-family:var(--j);font-weight:900}
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;mix-blend-mode:difference;color:#fff}
+.wm{font-family:var(--d);font-size:22px;letter-spacing:.06em}
+.wm b{color:var(--r)}
+#pt{font-size:11px;letter-spacing:.2em;opacity:.8}
+#mb{font-family:var(--d);font-size:18px;letter-spacing:.14em;padding:10px 16px;border:2px solid #fff;min-height:44px}
+#mb:hover{background:#fff;color:#000}
+.view{display:none;min-height:100vh}.view.on{display:block}
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+/* loader + wipe */
+#ld{position:fixed;inset:0;background:var(--k);z-index:100;display:grid;place-items:center;transition:clip-path .9s cubic-bezier(.7,0,.2,1);clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+#ld.out{clip-path:polygon(0 0,100% 0,100% 0,0 0)}
+#ld i{position:absolute;left:0;top:50%;height:3px;width:100%;background:var(--r);transform:scaleX(0);transform-origin:left;animation:cut 1s .2s forwards}
+#ld h1{font-size:clamp(46px,12vw,170px);color:var(--w);opacity:0;animation:fi .6s .9s forwards;text-align:center}
+@keyframes cut{to{transform:scaleX(1)}}@keyframes fi{to{opacity:1}}
+#wp{position:fixed;inset:0;background:var(--r);z-index:95;pointer-events:none;clip-path:polygon(-20% 0,-10% 0,-30% 100%,-40% 100%);transition:clip-path .45s cubic-bezier(.6,0,.2,1)}
+#wp.a{clip-path:polygon(-20% 0,140% 0,120% 100%,-40% 100%)}
+/* menu */
+#mn{position:fixed;inset:0;z-index:70;background:var(--k);display:grid;grid-template-columns:1.1fr 1fr;clip-path:circle(0 at calc(100% - 60px) 40px);transition:clip-path .8s cubic-bezier(.7,0,.2,1);visibility:hidden}
+#mn.on{clip-path:circle(150% at calc(100% - 60px) 40px);visibility:visible}
+#mn ul{list-style:none;align-self:center;padding:90px 22px 30px 5vw}
+#mn li a{display:flex;align-items:baseline;gap:16px;font-family:var(--d);font-size:clamp(30px,6vw,76px);line-height:1.05;position:relative;transition:transform .3s,color .3s;min-height:44px}
+#mn li a small{font:11px var(--m);color:var(--r)}
+#mn li a em{font:900 clamp(12px,1.4vw,18px) var(--j);opacity:0;transform:translateX(-10px);transition:.3s;font-style:normal;color:var(--o)}
+#mn li a:hover,#mn li a:focus-visible{transform:translateX(18px);color:var(--r)}
+#mn li a:hover em,#mn li a:focus-visible em{opacity:1;transform:none}
+#mn li a::after{content:"";position:absolute;left:0;bottom:2px;height:4px;width:0;background:var(--r);transition:width .4s}
+#mn li a:hover::after{width:100%}
+#pv{position:relative;overflow:hidden;background:var(--r);transition:background .4s;display:grid;place-items:center}
+#pv b{font:900 clamp(120px,22vw,360px)/1 var(--j);color:var(--k);opacity:.9;transition:.4s;writing-mode:vertical-rl}
+#pv span{position:absolute;left:18px;bottom:14px;font:11px var(--m);letter-spacing:.2em;color:var(--w)}
+@media(max-width:760px){#mn{grid-template-columns:1fr}#pv{display:none}#mn li a:hover{transform:none}#mn li a em{opacity:1;transform:none}}
+/* hero */
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden;background:var(--w);color:var(--k)}
+.hero .t1,.hero .t2{position:absolute;left:-1vw;font-size:clamp(70px,21vw,360px);white-space:nowrap}
+.hero .t1{top:12vh;z-index:1;color:var(--k)}
+.hero .t2{bottom:5vh;z-index:3;color:var(--r);mix-blend-mode:multiply;left:auto;right:-1vw}
+.hero svg{position:absolute;z-index:2;left:50%;bottom:-2vh;height:96vh;transform:translateX(-30%);transition:transform .2s}
+.hero .jp{position:absolute;z-index:2;right:4vw;top:18vh;writing-mode:vertical-rl;font-size:clamp(20px,3vw,44px);letter-spacing:.3em}
+.hero .go{position:absolute;z-index:4;left:22px;bottom:26px;display:flex;flex-direction:column;gap:8px}
+.hero .go a{font-family:var(--d);font-size:22px;letter-spacing:.08em;background:var(--k);color:var(--w);padding:10px 18px;min-height:44px;transition:.2s}
+.hero .go a:hover{background:var(--r);transform:skew(-8deg) translateX(8px)}
+.sc{position:absolute;z-index:4;right:22px;bottom:0;width:2px;height:90px;background:var(--g);overflow:hidden}.sc::after{content:"";position:absolute;inset:0;background:var(--r);animation:dr 1.8s infinite}
+@keyframes dr{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.sv{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.5}
+.part{position:relative;min-height:100vh;padding:14vh 5vw;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.part .bg{position:absolute;font-size:clamp(200px,48vw,800px);opacity:.1;right:-3vw;top:-8vh;line-height:.8;pointer-events:none}
+.part h2{font-size:clamp(54px,13vw,220px)}
+.part p{max-width:520px;margin:22px 0;font-size:14px}
+.p1{background:var(--k)}.p1 h2 span{color:var(--r)}
+.p2{background:var(--o);color:var(--k)}.p2 h2{text-align:right}.p2 p{margin-left:auto}.p2 .bg{left:-3vw;right:auto}
+.btn{display:inline-block;font-family:var(--d);font-size:22px;letter-spacing:.08em;padding:12px 24px;background:var(--r);color:var(--w);clip-path:polygon(0 0,100% 0,94% 100%,0 100%);min-height:44px;transition:.25s}
+.p2 .btn{background:var(--k)}.btn:hover{transform:translateX(10px);filter:brightness(1.2)}
+.mq{white-space:nowrap;overflow:hidden;background:var(--r);padding:10px 0;transform:rotate(-1.5deg) scale(1.03)}
+.mq div{display:inline-block;font-family:var(--d);font-size:34px;animation:mq 22s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.end{min-height:90vh;display:grid;place-items:center;text-align:center;background:var(--w);color:var(--k);padding:10vh 5vw;position:relative}
+.end h2{font-size:clamp(50px,14vw,230px)}.end h2 span{color:var(--r)}
+/* page heads */
+.ph{padding:18vh 5vw 4vh;position:relative}
+.ph h1{font-size:clamp(52px,12vw,190px)}.ph h1 span{color:var(--r)}
+.ph .jp{position:absolute;right:5vw;top:16vh;font-size:clamp(30px,6vw,90px);color:var(--g);opacity:.5;writing-mode:vertical-rl}
+.tog{display:flex;gap:10px;margin:22px 0 0}
+.tog button{font-family:var(--d);font-size:20px;letter-spacing:.08em;padding:8px 18px;border:2px solid var(--w);min-height:44px}
+.tog button.on,.tog button:hover{background:var(--w);color:var(--k)}
+/* characters */
+.cs{display:grid;grid-template-columns:minmax(220px,1fr) 2fr;gap:3vw;padding:2vh 5vw 10vh;min-height:70vh}
+.cl{display:flex;flex-direction:column}
+.cl button{text-align:left;font-family:var(--d);font-size:clamp(26px,3.5vw,48px);padding:2px 0;color:var(--g);transition:.25s;min-height:44px;text-transform:uppercase}
+.cl button:hover,.cl button.on{color:var(--w);transform:translateX(14px)}.cl button.on{color:var(--r)}
+.st{position:relative;border:2px solid var(--w);padding:4vw;overflow:hidden;min-height:60vh;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c,var(--r));color:var(--k);clip-path:polygon(0 0,100% 3%,100% 100%,0 97%);transition:background .4s}
+.st .wj{position:absolute;right:2vw;top:-2vw;font:900 clamp(140px,26vw,400px)/1 var(--j);opacity:.18;writing-mode:vertical-rl;pointer-events:none}
+.st h3{font-size:clamp(48px,9vw,150px);position:relative}
+.st .c{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin:10px 0}
+.st p{max-width:520px;position:relative}
+.st .btn{margin-top:18px;background:var(--k);align-self:flex-start}
+@media(max-width:760px){.cs{grid-template-columns:1fr}.cl{flex-direction:row;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory}.cl button{white-space:nowrap;scroll-snap-align:start}}
+#pf{position:fixed;inset:0;z-index:80;background:var(--k);overflow-y:auto;transform:translateY(100%);transition:transform .7s cubic-bezier(.7,0,.2,1);visibility:hidden}
+#pf.on{transform:none;visibility:visible}
+#pf .top{min-height:80vh;background:var(--c);color:var(--k);padding:16vh 5vw 5vw;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+#pf .top h2{font-size:clamp(60px,15vw,250px)}
+#pf .top .wj{position:absolute;right:3vw;top:8vh;font:900 clamp(120px,24vw,380px)/1 var(--j);opacity:.18;writing-mode:vertical-rl}
+#pf .x{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:22px;z-index:5;font-family:var(--d);font-size:18px;padding:10px 16px;background:var(--k);color:var(--w);border:2px solid var(--w);min-height:44px}
+.pb{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:4vw;padding:8vh 5vw}
+.pb h4{font-family:var(--d);font-size:28px;color:var(--r);margin-bottom:8px;letter-spacing:.05em;font-weight:400}
+.pb a{display:inline-block;border-bottom:2px solid var(--r);margin:0 10px 6px 0}.pb a:hover{background:var(--r)}
+/* devils */
+.dv{display:grid;grid-template-columns:minmax(200px,1fr) 2.2fr;gap:3vw;padding:2vh 5vw 10vh}
+.dl button{display:flex;gap:12px;width:100%;text-align:left;padding:10px 0;border-bottom:1px solid var(--g);font-size:13px;min-height:44px;transition:.2s}
+.dl button b{color:var(--r)}.dl button:hover,.dl button.on{padding-left:14px;background:var(--w);color:var(--k)}
+.fl{position:relative;background:var(--w);color:var(--k);padding:4vw;min-height:60vh;overflow:hidden;transform:rotate(-.6deg)}
+.fl::after{content:"";position:absolute;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(207,38,45,.25),transparent);animation:sn 3.5s linear infinite;pointer-events:none}
+@keyframes sn{from{top:-60px}to{top:100%}}
+.fl .no{font-size:12px;letter-spacing:.2em;color:var(--r)}
+.fl h3{font-size:clamp(44px,8vw,120px);margin:8px 0}
+.fl .jp{font-size:22px}
+.fl .red{display:inline-block;background:var(--k);color:var(--k);padding:0 8px;user-select:none}.fl .red:hover{color:var(--w)}
+.fl dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:18px 0;font-size:13px;max-width:560px}.fl dt{color:var(--r)}
+@media(max-width:760px){.dv{grid-template-columns:1fr}}
+/* arcs */
+.at{display:flex;overflow-x:auto;padding:0 5vw;gap:4px;scroll-snap-type:x mandatory}
+.at button{flex:0 0 auto;font-family:var(--d);font-size:22px;padding:10px 18px;background:#222;scroll-snap-align:start;min-height:44px;letter-spacing:.05em;transition:.2s}
+.at button.on,.at button:hover{background:var(--r)}
+.ad{margin:4vh 5vw 10vh;display:grid;grid-template-columns:1.2fr 1fr;border:2px solid var(--w);min-height:60vh}
+.ad .l{padding:4vw;background:var(--c);color:var(--k);position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,88% 100%,0 100%);transition:.4s}
+.ad .l h3{font-size:clamp(46px,8vw,130px)}.ad .l .n{font:900 clamp(100px,18vw,260px)/1 var(--j);position:absolute;right:8%;bottom:-3vw;opacity:.2}
+.ad .r{padding:4vw;display:grid;gap:14px;align-content:center}.ad .r b{color:var(--r);font-family:var(--d);font-weight:400;font-size:20px;letter-spacing:.06em}
+@media(max-width:760px){.ad{grid-template-columns:1fr}.ad .l{clip-path:none}}
+/* world */
+.hz{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0}
+.loc{flex:0 0 min(88vw,900px);height:76vh;scroll-snap-align:start;position:relative;overflow:hidden;padding:4vw;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c);color:var(--k);border-right:2px solid var(--k)}
+.loc h3{font-size:clamp(44px,8vw,120px);position:relative}.loc p{position:relative;max-width:480px;margin:10px 0}
+.loc svg{position:absolute;left:0;bottom:0;width:100%;height:60%;opacity:.35}
+.loc .tg a{display:inline-block;background:var(--k);color:var(--w);padding:4px 10px;margin:8px 8px 0 0;font-size:12px;position:relative}.loc .tg a:hover{background:var(--r)}
+/* volumes */
+.vs{display:flex;gap:14px;overflow-x:auto;padding:4vh 5vw;scroll-snap-type:x mandatory}
+.vc{flex:0 0 clamp(120px,16vw,190px);aspect-ratio:2/3;scroll-snap-align:center;position:relative;background:var(--c);color:var(--k);padding:10px;display:flex;flex-direction:column;justify-content:space-between;transition:.3s;overflow:hidden;text-align:left}
+.vc b{font:900 64px/1 var(--j);opacity:.9}.vc span{font:11px var(--m);letter-spacing:.1em}
+.vc:hover,.vc.on{transform:translateY(-16px) rotate(-2deg);box-shadow:8px 8px 0 var(--w)}
+.vf{display:grid;grid-template-columns:minmax(200px,340px) 1fr;gap:5vw;padding:2vh 5vw 10vh;align-items:center}
+.vf .big{aspect-ratio:2/3;background:var(--c);color:var(--k);padding:18px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.vf .big b{font:900 clamp(120px,18vw,260px)/1 var(--j)}
+.vf h3{font-size:clamp(40px,7vw,100px)}.vf p{margin:8px 0}
+.vf .nv{display:flex;gap:10px;margin-top:16px}.vf .nv button{border:2px solid var(--w);padding:8px 16px;font-family:var(--d);font-size:18px;min-height:44px}.vf .nv button:hover{background:var(--w);color:var(--k)}
+@media(max-width:760px){.vf{grid-template-columns:1fr}}
+/* lore */
+.lr{padding:2vh 5vw 10vh;display:grid;gap:0}
+.lr div{display:grid;grid-template-columns:1fr auto 1fr;gap:3vw;align-items:center;padding:3vh 0;border-top:2px solid var(--g)}
+.lr .a{font-size:clamp(30px,6vw,84px);text-align:right}.lr .b{font-size:clamp(30px,6vw,84px)}
+.lr em{font:11px var(--m);letter-spacing:.15em;color:var(--r);border:2px solid var(--r);padding:6px 12px;text-align:center;max-width:200px;font-style:normal}
+.lr button{text-align:inherit;text-transform:uppercase;transition:.2s}.lr button:hover{color:var(--r)}
+.note{padding:0 5vw 6vh;font-size:11px;color:var(--g);max-width:820px}
+@media(max-width:760px){.lr div{grid-template-columns:1fr;text-align:left}.lr .a{text-align:left}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+/* ===== ART-DIRECTION PASS ===== */
+/* hero: torn edge, hinomaru sun, vertical katakana spine, red slash */
+.hero{clip-path:polygon(0 0,100% 0,100% 93%,72% 100%,41% 94%,18% 99%,0 95%)}
+.sun{position:absolute;z-index:0;right:-12vw;top:4vh;width:78vh;height:78vh;border-radius:50%;background:var(--r)}
+.sun::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(var(--k) 28%,transparent 31%) 0 0/14px 14px;opacity:.35;-webkit-mask:linear-gradient(100deg,transparent 30%,#000)}
+.vt{position:absolute;z-index:2;left:2.2vw;top:11vh;writing-mode:vertical-rl;font-size:clamp(30px,5.6vw,92px);letter-spacing:.18em;color:var(--k);font-family:var(--j);font-weight:900}
+.vt::before{content:"";position:absolute;left:-14px;top:0;bottom:0;width:3px;background:var(--r)}
+.hero::after{content:"";position:absolute;z-index:3;left:-10%;right:-10%;top:61%;height:7px;background:var(--r);transform:rotate(-11deg);box-shadow:0 0 0 3px var(--k);pointer-events:none}
+.hero .t1{top:5vh;left:17vw;font-size:clamp(70px,25vw,440px)}
+.hero .t2{bottom:-3vh;right:-2vw;font-size:clamp(90px,31vw,520px)}
+.hero svg{left:40%;height:112vh;bottom:-9vh}
+.hero .jp{right:3vw;top:12vh}
+/* page heads: broken, indented, slashed */
+.ph h1{margin-left:-.04em}
+.ph h1 span{display:block;margin-left:14vw;margin-top:.06em;background:var(--r);color:var(--k);padding:0 .12em;width:max-content;transform:skewX(-7deg)}
+.ph .jp{opacity:.9;color:transparent;-webkit-text-stroke:1.5px var(--g);font-size:clamp(70px,16vw,260px);top:6vh;right:2vw}
+/* parts: slanted panels, outlined vertical kanji crossing the type */
+.part .bg{font-family:var(--j);font-weight:900;writing-mode:vertical-rl;font-size:clamp(220px,52vw,760px);line-height:1;color:transparent;-webkit-text-stroke:2px var(--r);right:-2vw;top:-4vh;opacity:1}
+.part .bg.rv{opacity:0}.part .bg.rv.in{opacity:1}
+.part h2{position:relative;z-index:2;margin-left:-1vw}
+.part h2 span{display:inline-block;transform:translateX(9vw)}
+.p1{clip-path:polygon(0 0,100% 7%,100% 100%,0 100%);margin-top:-6vh;padding-top:22vh}
+.p2{clip-path:polygon(0 0,100% 0,100% 93%,0 100%);padding-bottom:20vh}
+.p2 .bg{-webkit-text-stroke-color:var(--k);left:-2vw;right:auto}
+.p2 h2{text-align:left;margin-left:auto;padding-left:22vw}.p2 p{margin-left:22vw}
+.part p{border-left:4px solid currentColor;padding-left:16px}
+.end{place-items:end start;text-align:left;overflow:hidden}
+.end::before{content:"地獄";writing-mode:vertical-rl;position:absolute;right:3vw;top:-2vh;font:900 clamp(160px,38vw,600px)/1 var(--j);color:var(--r)}
+.end h2{position:relative;z-index:1;mix-blend-mode:multiply}
+/* characters: no box. type is the stage */
+.cs{grid-template-columns:minmax(200px,.7fr) 2.4fr}
+.cl{counter-reset:n;border-left:3px solid var(--r);padding-left:16px}
+.cl button::before{counter-increment:n;content:"0" counter(n);font:11px var(--m);color:var(--r);margin-right:12px;vertical-align:top}
+.st{background:none!important;border:0;clip-path:none;color:var(--w)!important;padding:0;overflow:visible}
+.st .wj{color:var(--c)!important;opacity:1!important;font-size:clamp(220px,46vw,640px);right:-3vw;top:-14vw;z-index:0;mix-blend-mode:screen}
+.st h3{color:var(--c);-webkit-text-stroke:1.5px var(--w);font-size:clamp(60px,13vw,230px);margin-left:-6vw;z-index:1;text-shadow:6px 6px 0 var(--k)}
+.st .c,.st p,.st .btn{position:relative;z-index:1}
+.st .c{color:var(--c)}
+.st .btn{background:var(--w);color:var(--k)}
+/* devils: stamped dossier with giant cropped file number */
+.fl{transform:rotate(-1.4deg);margin-right:-2vw}
+.fl::before{content:"機密";position:absolute;right:4%;top:6%;font:900 clamp(40px,6vw,84px) var(--j);color:var(--r);border:5px solid var(--r);padding:0 10px;transform:rotate(9deg);opacity:.85;letter-spacing:.1em}
+.fl h3{margin-left:-1.5vw}
+.dl button{font-size:12px}
+.dl{border-right:3px solid var(--r);padding-right:12px}
+/* arcs: ledger rail + outlined colossal title */
+.at{border-top:2px solid var(--g);border-bottom:2px solid var(--g);gap:0;padding:0 5vw}
+.at button{background:none;font-size:18px;border-right:1px solid var(--g);color:var(--g)}
+.at button.on,.at button:hover{background:none;color:var(--r);box-shadow:inset 0 -5px 0 var(--r)}
+.ad{border:0;grid-template-columns:2fr 1fr;margin-top:2vh;position:relative}
+.ad .l{background:none!important;color:var(--w)!important;clip-path:none;padding:2vw 0;overflow:visible}
+.ad .l h3{color:var(--c);-webkit-text-stroke:2px var(--w);font-size:clamp(54px,12vw,210px);margin-left:-2vw;text-shadow:8px 8px 0 var(--k)}
+.ad .l .n{color:var(--c);opacity:.35;font-size:clamp(180px,34vw,520px);right:-2vw;bottom:-10vw}
+.ad .r{border-left:3px solid var(--r);z-index:1;background:var(--k)}
+/* world: staggered, unequal plates with vertical place names */
+.hz{align-items:flex-start;gap:0;padding-bottom:6vh}
+.loc{border:0;clip-path:polygon(0 0,100% 4%,96% 100%,0 96%)}
+.loc:nth-child(even){margin-top:9vh;flex-basis:min(66vw,620px);height:62vh;clip-path:polygon(4% 0,100% 0,100% 94%,0 100%)}
+.loc:nth-child(3n){flex-basis:min(92vw,980px)}
+.loc>.j{position:absolute!important;right:2vw;top:2vh;writing-mode:vertical-rl;font-size:clamp(70px,13vw,200px)!important;opacity:.28;line-height:1}
+/* volumes: halftone covers at uneven heights, giant number breaking the frame */
+.vs{align-items:flex-start;padding-top:8vh}
+.vc{background-image:radial-gradient(rgba(17,17,17,.28) 1.4px,transparent 1.8px);background-size:7px 7px;border-left:6px solid var(--k)}
+.vc:nth-child(odd){margin-top:7vh}.vc:nth-child(3n){aspect-ratio:2/3.3}
+.vf .big{overflow:visible;transform:rotate(-3deg);box-shadow:14px 14px 0 var(--r)}
+.vf .big b{margin-right:-45%;mix-blend-mode:difference;color:var(--w);-webkit-text-stroke:0}
+.vf h3{margin-left:-4vw}
+/* lore: contracts as stamped seals between oversized names */
+.lr div:nth-child(even){margin-left:10vw}
+.lr em{border-radius:50%;width:110px;height:110px;display:grid;place-items:center;padding:10px;transform:rotate(-12deg);background:var(--r);color:var(--k);border-color:var(--w)}
+/* ===== AUDIT FIXES + MOTION SUPPORT ===== */
+:root{--gl:#A8A49E}
+header{z-index:75}
+#ml li{overflow:hidden}
+.note,.at button,.cl button{color:var(--gl)}
+#pv span{font-size:12px}
+.ph h1{position:relative;z-index:1}
+.loc svg{left:-10%;width:120%;opacity:.5}
+#pf .top h2{overflow:hidden;padding:.06em 0}
+.fl::before{content:none}
+.stp{position:absolute;right:4%;top:6%;font:900 clamp(40px,6vw,84px) var(--j);color:var(--r);border:5px solid var(--r);padding:0 10px;letter-spacing:.1em;z-index:2;transform:rotate(9deg)}
+.emb{position:absolute;right:-8vw;top:-6vw;width:min(70vw,540px);z-index:0;opacity:.95;pointer-events:none}
+.vc>*,.big>*{position:relative;z-index:1}.vart{position:absolute!important;inset:0;width:100%;height:100%;z-index:0!important;opacity:.28}
+#wk{position:fixed;inset:0;background:var(--k);z-index:94;pointer-events:none;clip-path:polygon(-20% 0,-10% 0,-30% 100%,-40% 100%)}
+.gs .rv{opacity:1;transform:none;transition:none}
+.gs #wp{transition:none}
+.gs .hero svg{transform:none;transition:none}.gs .mq div{animation:none}.gs .btn:hover{transform:none}
+.gs .hero .t1,.gs .hero .t2{clip-path:inset(-2% -2% 0 -2%)}
+.ch{display:inline-block}
+@media(max-width:760px){.hero svg{height:84vh;left:50%;bottom:-4vh}.vt{font-size:34px;top:12vh}.st h3,.ad .l h3,.vf h3,.fl h3{margin-left:0}.fl{margin-right:0}.p2 h2{padding-left:0}.p2 p{margin-left:0}.lr div:nth-child(even){margin-left:0}.hero .t1{left:6vw}.ph h1 span{margin-left:6vw}.loc,.loc:nth-child(n){flex-basis:88vw}.emb{width:90vw}.ph .jp{font-size:34vw;opacity:.35}}
+</style></head><body>
+<div id="ld" role="status" aria-label="Loading"><i></i><h1 class="d">Chainsaw<br>Man</h1></div>
+<div id="wp"></div>
+<header><a href="#home" class="wm" aria-label="Home">CSM<b>//</b>ARCHIVE</a><span id="pt">PART 1 — 2 · チェンソーマン</span><button id="mb" aria-expanded="false" aria-controls="mn">MENU</button></header>
+<nav id="mn" aria-label="Main"><ul id="ml"></ul><div id="pv" aria-hidden="true"><b>電</b><span id="pvl">CHAINSAW MAN</span></div></nav>
+<main>
+<section class="view" id="v-home">
+ <div class="hero" id="hero">
+  <div class="sun" aria-hidden="true"></div><div class="vt" aria-hidden="true">チェンソーマン</div><div class="t1 d" aria-hidden="true">Chainsaw</div>
+  <svg viewBox="0 0 400 700" aria-label="Original illustration: a silhouette with a chainsaw head" role="img">
+   <circle cx="230" cy="260" r="170" fill="#CF262D"/>
+   <path d="M120 700L135 430Q150 360 200 345L280 345Q330 360 340 430L360 700Z" fill="#111"/>
+   <path d="M190 345L230 480L275 345Z" fill="#F0EEE8"/>
+   <g fill="#E48B36" stroke="#111" stroke-width="5"><path d="M232 40L252 140L212 140Z"/><path d="M300 70L290 160L250 140Z"/><path d="M345 130L310 200L275 165Z"/><path d="M160 70L195 150L160 165Z"/><path d="M118 135L180 190L150 215Z"/></g>
+   <ellipse cx="232" cy="235" rx="72" ry="92" fill="#111"/>
+   <path d="M175 225L290 225L282 255L180 250Z" fill="#F0EEE8"/>
+   <path d="M205 290L260 290L250 320L212 320Z" fill="#CF262D"/>
+   <path d="M345 420L395 330L385 300L330 400Z" fill="#E48B36" stroke="#111" stroke-width="4"/>
+   <path d="M20 560L120 500L120 520L40 580Z" fill="#E48B36" stroke="#111" stroke-width="4"/>
+  </svg>
+  <div class="jp j" aria-hidden="true">電鋸の悪魔</div>
+  <div class="t2 d" aria-hidden="true">Man</div>
+  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden">Chainsaw Man</h1>
+  <div class="go"><a href="#characters" data-p="1">PART 1 — PUBLIC SAFETY</a><a href="#arcs" data-p="2">PART 2 — ACADEMY</a></div><div class="sc" aria-hidden="true"></div>
+ </div>
+ <div class="mq" aria-hidden="true"><div class="d">DEVIL HUNTERS ★ CONTRACTS ★ BLOOD ★ HELL ★ CHAINSAW ★ DEVIL HUNTERS ★ CONTRACTS ★ BLOOD ★ HELL ★ CHAINSAW ★ </div></div>
+ <div class="part p1"><div class="bg rv" aria-hidden="true">公安</div><h2 class="d rv">Public<br><span>Safety</span> Saga</h2><p class="rv">A debt-ridden teen merges with the Chainsaw Devil and joins the Public Safety Devil Hunters. Part 1 spans volumes 1–11 (97 chapters).</p><a class="btn rv" href="#arcs">ENTER THE ARCHIVE</a></div>
+ <div class="part p2"><div class="bg rv" aria-hidden="true">学園</div><h2 class="d rv">Academy<br>Saga</h2><p class="rv">Asa Mitaka, a student bound to the War Devil, collides with Denji's world. Part 2 continues from volume 12.</p><a class="btn rv" href="#characters">MEET THE CAST</a></div>
+ <div class="end"><div><h2 class="d rv">Hell<br>has a <span>hero</span></h2><p class="rv" style="margin:18px 0">Characters · Devils · Arcs · Places · 24 Volumes</p><a class="btn rv" href="#devils">OPEN CLASSIFIED FILES</a></div></div>
+</section>
+<section class="view" id="v-characters"><div class="ph"><h1 class="d">The <span>Cast</span></h1><div class="jp j" aria-hidden="true">登場人物</div><div class="tog" id="ct"><button data-p="1" class="on">PART 1</button><button data-p="2">PART 2</button></div></div><div class="cs"><div class="cl" id="cl"></div><div class="st" id="cst" aria-live="polite"></div></div></section>
+<section class="view" id="v-devils"><div class="ph"><h1 class="d">Classified <span>Files</span></h1><div class="jp j" aria-hidden="true">機密</div><p style="max-width:520px;margin-top:12px;font-size:13px">Fictional Public Safety archive. Threat ratings are this site's own invention; hover redactions to reveal.</p></div><div class="dv"><div class="dl" id="dl"></div><article class="fl" id="df"></article></div></section>
+<section class="view" id="v-arcs"><div class="ph"><h1 class="d">Story <span>Arcs</span></h1><div class="jp j" aria-hidden="true">物語</div></div><div class="at" id="at" role="tablist"></div><div class="ad" id="ad"></div><p class="note">Arc names follow common fan convention; chapter and volume spans are approximate and Part 2 is ongoing — check official releases.</p></section>
+<section class="view" id="v-world"><div class="ph"><h1 class="d">World &amp; <span>Places</span></h1><div class="jp j" aria-hidden="true">世界</div><p style="margin-top:12px;font-size:12px">Swipe or scroll sideways →</p></div><div class="hz" id="hz"></div></section>
+<section class="view" id="v-volumes"><div class="ph"><h1 class="d">The <span>Volumes</span></h1><div class="jp j" aria-hidden="true">単行本</div></div><div class="vs" id="vs"></div><div class="vf" id="vf"></div><p class="note">Covers here are original typographic placeholders, not official artwork. Chapter spans for 1–11 are standard; Part 2 listings are kept general.</p></section>
+<section class="view" id="v-lore"><div class="ph"><h1 class="d">Lore &amp; <span>Links</span></h1><div class="jp j" aria-hidden="true">関係</div></div><div class="lr" id="lr"></div></section>
+</main>
+<aside id="pf" aria-label="Character profile"><button class="x" id="px">CLOSE ✕</button><div id="pc"></div></aside>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const NAV=[['home','HOME','ホーム','電','#CF262D'],['characters','CHARACTERS','キャラクター','人','#E48B36'],['devils','DEVILS & FIENDS','悪魔','魔','#76736F'],['arcs','STORY ARCS','物語','話','#CF262D'],['world','WORLD & LOCATIONS','世界','界','#E48B36'],['volumes','MANGA VOLUMES','単行本','巻','#76736F'],['lore','LORE & CONNECTIONS','関係','契','#CF262D']];
+const CH=[
+['denji','Denji','デンジ','1,2','Devil Hunter · Chainsaw Man (hybrid)','#CF262D','A broke teenager who sold parts of himself to pay off his father’s debt. Merging with Pochita makes him a devil hunter with a chainsaw heart and very simple dreams.','Chainsaw blades from head and arms; regenerates by taking in blood.',['pochita','makima','power','aki','nayuta'],'Chainsaw Devil'],
+['pochita','Pochita','ポチタ','1','Chainsaw Devil · Hero of Hell','#E48B36','The small devil who became Denji’s heart. Feared and beloved in Hell, he is the origin of Chainsaw Man.','Devil of chainsaws; eats other devils and erases them from memory.',['denji','makima'],'Chainsaw Devil'],
+['makima','Makima','マキマ','1','Public Safety Devil Hunter · Control Devil','#CF262D','Calm, charismatic head of Public Safety’s Special Division 4, who hides far more than she reveals.','Control over those she considers lesser; contract-based healing.',['denji','aki','power','nayuta'],'Control Devil'],
+['power','Power','パワー','1','Blood Fiend · Public Safety','#E48B36','Loud, selfish and unexpectedly loyal. A fiend who shares a home with Denji and Aki.','Manipulates blood into weapons and armor.',['denji','aki','makima'],'Blood Fiend'],
+['aki','Aki Hayakawa','早川アキ','1','Devil Hunter · Public Safety','#76736F','Disciplined and driven by revenge. Makima’s partner in the field and Denji’s reluctant senior.','Contracts with the Fox Devil, Curse Devil and Future Devil.',['denji','power','makima','kishibe'],'Fox, Curse, Future Devils'],
+['kobeni','Kobeni Higashiyama','東山コベニ','1','Public Safety Devil Hunter','#E48B36','Terrified of nearly everything and somehow always survives.','Sword work; surprising reflexes under pressure.',['denji','aki'],'—'],
+['reze','Reze','レゼ','1','Bomb Devil hybrid','#CF262D','A friendly café worker with a different agenda. Her story forms the Bomb Girl arc.','Explosions generated from her body.',['denji'],'Bomb Devil'],
+['kishibe','Kishibe','岸辺','1,2','Veteran Devil Hunter','#76736F','A scarred, ruthless veteran who trains Denji and Aki.','Hunting experience; knows devil contracts inside out.',['denji','aki','makima'],'—'],
+['asa','Asa Mitaka','三鷹アサ','2','Student · host of the War Devil','#CF262D','A socially anxious high schooler whose life is upended when the War Devil wakes inside her.','Weapon-based abilities via her devil’s contract.',['yoru','denji','nayuta','yoshida'],'War Devil (Yoru)'],
+['yoru','Yoru','ヨル','2','War Devil','#111111','A manipulative devil sharing Asa’s body, with her own wants and plans.','Weapons through the War Devil’s power.',['asa','denji','fami'],'War Devil'],
+['nayuta','Nayuta','ナユタ','2','Child under Denji’s care','#E48B36','A small girl raised by Denji. Her origin connects back to a major Part 1 figure.','Associated with the Control Devil’s legacy.',['denji','asa','makima'],'Control Devil (origin)'],
+['fami','Fami','ファミ','2','Famine Devil','#76736F','A devil tied to the Four Horsemen and Yoru’s family circle.','Famine-themed powers.',['yoru','asa'],'Famine Devil'],
+['yoshida','Yoshida','ヨシダ','1,2','Devil Hunter','#CF262D','Hirofumi Yoshida: a quiet, calculating hunter who appears in both parts.','Devil hunting; hidden motives.',['denji','asa'],'—']];
+const DV=[
+['CM-001','Chainsaw Devil','チェンソーの悪魔','Pochita','S','Hero of Hell. Feared enough that being eaten erases a devil from existence.'],
+['CM-002','Blood Fiend','血の魔人','Power','B','A devil in a human corpse: a fiend, not a true devil. Blood is a weapon.'],
+['CM-003','Gun Devil','銃の悪魔','Public Safety target','S','Embodies fear of guns. Drives much of Part 1’s endgame.'],
+['CM-004','Control Devil','支配の悪魔','Makima','S','A devil that takes the form of a human leader. Chief mover of the Public Safety Saga.'],
+['CM-005','Darkness Devil','暗闇の悪魔','Hell’s Primal Fears','A','One of the oldest fears, set among the strongest devils.'],
+['CM-006','Falling Devil','落下の悪魔','Part 2 files','A','A Part 2 devil. File partially <span class="red">redacted text</span>.'],
+['CM-007','War Devil','戦争の悪魔','Yoru / Asa','S','Horseman devil. Sharing a body with a human host.'],
+['CM-008','Future Devil','未来の悪魔','Aki Hayakawa','B','A contractor devil with a glimpse of what is coming.'],
+['CM-009','Fox Devil','狐の悪魔','Aki Hayakawa','C','Summoned as a fox head to devour enemies.'],
+['CM-010','Curse Devil','呪いの悪魔','Aki Hayakawa','A','A contract with a heavy price — it spends years of life.']];
+const AR=[
+['Introduction','1','Vol 1','Denji, Pochita, Makima','Yakuza','Denji’s apartment, Public Safety HQ','Denji’s debt, the loss of Pochita, and Makima’s offer.','#CF262D'],
+['Bat Devil','1','Vol 1–2','Denji, Power, Aki','Bat Devil','Tokyo','First missions together.','#E48B36'],
+['Eternity Devil','1','Vol 2–3','Denji, Power, Aki, Kobeni','Eternity Devil','Hotel','A hotel trap with no way out.','#76736F'],
+['Katana Man','1','Vol 3–4','Denji, Aki, Himeno','Katana Man','Tokyo','Hunters under attack.','#CF262D'],
+['Bomb Girl','1','Vol 4–5','Denji, Reze','Reze','Café, school pool, Tokyo','Romance and betrayal.','#E48B36'],
+['International Assassins','1','Vol 6–7','Denji, Public Safety squad','Assassins','Tokyo','Hunters from abroad enter.','#76736F'],
+['Gun Devil','1','Vol 7–9','Denji, Makima, Aki','Gun Devil','Tokyo','The city’s worst fear returns.','#CF262D'],
+['Control Devil','1','Vol 9–11','Denji, Makima','Control Devil','Tokyo','Showdown at the heart of Part 1.','#111111'],
+['Academy Saga','2','Vol 12+','Asa, Yoru, Denji, Nayuta','War Devil','High school, Tokyo','Part 2 begins with a new protagonist.','#E48B36'],
+['War Devil Arc','2','Vol 12+','Asa, Yoru, Fami','War Devil','School, Tokyo','Ongoing — Part 2 title varies by release.','#76736F']];
+const LO=[
+['Tokyo','東京','City of devils','The setting of most of the series: devil hunters on rooftops, devils in alleys.','#CF262D','denji,makima'],
+['Public Safety HQ','公安','Special Division 4','Where hunters train, and where Makima runs missions.','#76736F','makima,aki'],
+['Denji’s Home','デンジの家','Shack, then shared house','From a shack beside a river to a shared household with Power and Aki.','#E48B36','denji,power'],
+['The Hotel','ホテル','Eternity Devil','A hotel with no exit.','#111111','denji,power,aki'],
+['Hell','地獄','Where devils die and return','Where Pochita is a hero and Darkness hunts him.','#CF262D','pochita'],
+['Academy','学園','School life','Part 2 school grounds where Asa’s days become something else.','#E48B36','asa,yoru']];
+const LK=[['denji','CONTRACT','pochita'],['makima','CONTROL','denji'],['aki','FOX / CURSE / FUTURE','denji'],['asa','WAR DEVIL','yoru'],['makima','LEGACY','nayuta'],['power','BLOOD FIEND','denji']];
+let part='1',cur='denji',dcur=0,acur=0,vcur=1;
+const cid=id=>CH.find(c=>c[0]===id);
+const VOL=Array.from({length:24},(_,i)=>{const n=i+1,p=n<=11,ch=p?(n===1?'1–7':`${(n-2)*9+8}–${(n-1)*9+7}`):'Part 2 chapters',col=['#CF262D','#E48B36','#76736F','#F0EEE8'][i%4];return{n,p,ch,col};});
+/* menu */
+$('#ml').innerHTML=NAV.map((n,i)=>`<li><a href="#${n[0]}" data-i="${i}"><small>0${i+1}</small>${n[1]}<em>${n[2]}</em></a></li>`).join('');
+const mn=$('#mn'),mb=$('#mb');
+function menu(o){mn.classList.toggle('on',o);mb.setAttribute('aria-expanded',o);mb.textContent=o?'CLOSE':'MENU';document.body.style.overflow=o?'hidden':''}
+mb.onclick=()=>menu(!mn.classList.contains('on'));
+$$('#ml a').forEach(a=>{const f=()=>{const n=NAV[a.dataset.i];$('#pv').style.background=n[4];$('#pv b').textContent=n[3];$('#pvl').textContent=n[1]};a.onmouseenter=f;a.onfocus=f;a.onclick=()=>menu(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){menu(false);closeP()}});
+/* router */
+const wp=$('#wp');let first=true;
+function show(){const h=(location.hash||'#home').slice(1);const v=$('#v-'+(document.getElementById('v-'+h)?h:'home'));
+ const go=()=>{$$('.view').forEach(x=>x.classList.remove('on'));v.classList.add('on');scrollTo(0,0);$$('.rv').forEach(e=>e.classList.remove('in'));setTimeout(io,50);$('#pt').textContent=h==='home'?'PART 1 — 2 · チェンソーマン':h.toUpperCase()};
+ if(first){first=false;go();return}wp.classList.add('a');setTimeout(()=>{go();setTimeout(()=>wp.classList.remove('a'),150)},450)}
+addEventListener('hashchange',show);
+function io(){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}}),{threshold:.15});$$('.view.on .rv').forEach(e=>o.observe(e))}
+/* characters */
+function drawC(){const list=CH.filter(c=>c[3].includes(part));if(!list.find(c=>c[0]===cur))cur=list[0][0];
+ $('#cl').innerHTML=list.map(c=>`<button class="${c[0]===cur?'on':''}" data-id="${c[0]}">${c[1]}</button>`).join('');
+ const c=cid(cur),st=$('#cst');st.style.setProperty('--c',c[5]);st.style.color=c[5]==='#111111'?'#F0EEE8':'#111';
+ st.innerHTML=`<div class="wj" aria-hidden="true">${c[2].slice(0,2)}</div><div class="c">${c[2]} · ${c[4]}</div><h3 class="d">${c[1]}</h3><p>${c[6]}</p><button class="btn" id="of">OPEN FILE</button>`;
+ $$('#cl button').forEach(b=>b.onclick=()=>{cur=b.dataset.id;drawC()});$('#of').onclick=()=>openP(cur)}
+$$('#ct button').forEach(b=>b.onclick=()=>{part=b.dataset.p;$$('#ct button').forEach(x=>x.classList.toggle('on',x===b));drawC()});
+function openP(id){const c=cid(id);cur=id;$('#pc').innerHTML=`<div class="top" style="--c:${c[5]};color:${c[5]==='#111111'?'#F0EEE8':'#111'}"><div class="wj" aria-hidden="true">${c[2].slice(0,2)}</div><div class="j" style="font-size:22px">${c[2]}</div><h2 class="d">${c[1]}</h2><p style="margin-top:12px;letter-spacing:.2em;font-size:12px">${c[4].toUpperCase()}</p></div><div class="pb"><div><h4>BACKGROUND</h4><p>${c[6]}</p></div><div><h4>POWERS</h4><p>${c[7]}</p></div><div><h4>APPEARS IN</h4><p>${c[3].split(',').map(p=>'Part '+p).join(' · ')}</p></div><div><h4>RELATIONSHIPS</h4>${c[8].map(r=>`<a href="#" data-r="${r}">${cid(r)[1]}</a>`).join('')}</div><div><h4>DEVILS &amp; CONTRACTS</h4><p>${c[9]}</p></div></div>`;
+ $('#pf').classList.add('on');$('#pf').scrollTop=0;$$('#pc [data-r]').forEach(a=>a.onclick=e=>{e.preventDefault();openP(a.dataset.r)});$('#px').focus()}
+function closeP(){$('#pf').classList.remove('on')}$('#px').onclick=closeP;
+/* devils */
+function drawD(){$('#dl').innerHTML=DV.map((d,i)=>`<button class="${i===dcur?'on':''}" data-i="${i}"><b>${d[0]}</b>${d[1]}</button>`).join('');
+ const d=DV[dcur];$('#df').innerHTML=`<div class="no">FILE ${d[0]} · CLASSIFIED</div><h3 class="d">${d[1]}</h3><div class="jp j">${d[2]}</div><dl><dt>THREAT</dt><dd>${d[4]} (site rating)</dd><dt>CONTRACTOR</dt><dd>${d[3]}</dd><dt>TYPE</dt><dd>${d[1].includes('Fiend')?'FIEND':'DEVIL'}</dd></dl><p>${d[5]}</p><p style="margin-top:14px"><span class="red">NOTE REDACTED</span></p>`;
+ $$('#dl button').forEach(b=>b.onclick=()=>{dcur=+b.dataset.i;drawD()})}
+/* arcs */
+function drawA(){$('#at').innerHTML=AR.map((a,i)=>`<button role="tab" aria-selected="${i===acur}" class="${i===acur?'on':''}" data-i="${i}">P${a[1]} · ${a[0]}</button>`).join('');
+ const a=AR[acur],dark=a[7]==='#111111';$('#ad').innerHTML=`<div class="l" style="--c:${a[7]};${dark?'color:#F0EEE8':''}"><div class="n" aria-hidden="true">${String(acur+1).padStart(2,'0')}</div><div style="font-size:12px;letter-spacing:.2em">PART ${a[1]} · ${a[2].toUpperCase()}</div><h3 class="d">${a[0]}</h3><p style="margin-top:14px;max-width:420px">${a[7+1]}</p></div><div class="r"><div><b>MAIN CHARACTERS</b><br>${a[3]}</div><div><b>ANTAGONIST</b><br>${a[4]}</div><div><b>KEY LOCATIONS</b><br>${a[5]}</div><div><b>VOLUMES</b><br>${a[2]}</div></div>`;
+ $$('#at button').forEach(b=>b.onclick=()=>{acur=+b.dataset.i;drawA()})}
+/* world */
+function drawW(){$('#hz').innerHTML=LO.map(l=>{const dk=l[4]==='#111111';return`<article class="loc" style="--c:${l[4]};${dk?'color:#F0EEE8':''}"><svg viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true"><path fill="${dk?'#F0EEE8':'#111'}" d="M0 100V60h30V30h25v40h30V45h20v55h40V20h30v80h25V50h35V35h25v65h30V55h40v45z"/></svg><div class="j" style="font-size:22px;position:relative">${l[1]}</div><h3 class="d">${l[0]}</h3><div style="font-size:12px;letter-spacing:.2em;position:relative">${l[2].toUpperCase()}</div><p>${l[3]}</p><div class="tg">${l[5].split(',').map(r=>`<a href="#characters" data-c="${r}">${cid(r)[1]}</a>`).join('')}</div></article>`}).join('');
+ $$('#hz [data-c]').forEach(a=>a.onclick=()=>{cur=a.dataset.c;part=cid(cur)[3].includes('1')?'1':'2';$$('#ct button').forEach(x=>x.classList.toggle('on',x.dataset.p===part));drawC()})}
+/* volumes */
+function drawV(){$('#vs').innerHTML=VOL.map(v=>`<button class="vc ${v.n===vcur?'on':''}" style="--c:${v.col}" data-n="${v.n}" aria-label="Volume ${v.n}"><span>VOL.</span><b>${String(v.n).padStart(2,'0')}</b><span>${v.p?'PART 1':'PART 2'}</span></button>`).join('');
+ const v=VOL[vcur-1],arcs=AR.filter(a=>v.p?a[1]==='1'&&a[2].match(/\d+/g).map(Number).some((x,i,arr)=>vcur>=arr[0]&&vcur<=arr[arr.length-1]):a[1]==='2');
+ $('#vf').innerHTML=`<div class="big" style="--c:${v.col}"><span>PLACEHOLDER COVER</span><b>${String(v.n).padStart(2,'0')}</b><span class="j">チェンソーマン</span></div><div><div style="color:var(--r);font-size:12px;letter-spacing:.2em">${v.p?'PUBLIC SAFETY SAGA':'ACADEMY SAGA'}</div><h3 class="d">Volume ${v.n}</h3><p>Chapters: ${v.ch}</p><p>Arcs: ${arcs.map(a=>a[0]).join(', ')||'—'}</p><div class="nv"><button id="vp" ${v.n===1?'disabled':''}>← PREV</button><button id="vn" ${v.n===24?'disabled':''}>NEXT →</button></div></div>`;
+ $$('#vs .vc').forEach(b=>b.onclick=()=>{vcur=+b.dataset.n;drawV();$('#vs .on').scrollIntoView({inline:'center',block:'nearest'})});
+ $('#vp').onclick=()=>{vcur--;drawV()};$('#vn').onclick=()=>{vcur++;drawV()}}
+/* lore */
+$('#lr').innerHTML=LK.map(l=>`<div class="rv"><button class="a d" data-c="${l[0]}">${cid(l[0])[1]}</button><em>${l[1]}</em><button class="b d" data-c="${l[2]}">${cid(l[2])?cid(l[2])[1]:l[2]}</button></div>`).join('');
+$$('#lr button').forEach(b=>b.onclick=()=>openP(b.dataset.c));
+drawC();drawD();drawA();drawW();drawV();
+/* parallax */
+const hero=$('#hero'),sv=hero.querySelector('svg');
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)hero.onmousemove=e=>{const x=(e.clientX/innerWidth-.5)*30;sv.style.transform=`translateX(calc(-30% + ${x}px))`};
+/* loader */
+const ld=$('#ld');let seen=false;try{seen=sessionStorage.getItem('csm')}catch(e){}
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+show();
+setTimeout(()=>{ld.classList.add('out');try{sessionStorage.setItem('csm','1')}catch(e){}setTimeout(()=>ld.style.display='none',950)},seen||rm?50:2100);
+</script><script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'></script>
+<script>
+(function(){
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(!window.gsap||!window.ScrollTrigger||RM)return;
+gsap.registerPlugin(ScrollTrigger);document.documentElement.classList.add('gs');
+const EX='expo.out',IO='power4.inOut',M=innerWidth<760,hov=matchMedia('(hover:hover)').matches;
+const wp=$('#wp'),wk=document.createElement('div');wk.id='wk';document.body.appendChild(wk);
+const IN='polygon(-20% 0,-10% 0,-30% 100%,-40% 100%)',FULL='polygon(-20% 0,140% 0,120% 100%,-40% 100%)',OUT='polygon(140% 0,140% 0,120% 100%,120% 100%)';
+gsap.set(wp,{clipPath:IN});
+const split=el=>{if(!el||el.dataset.s)return;el.dataset.s=1;el.innerHTML=[...el.textContent].map(c=>c===' '?' ':`<span class='ch'>${c}</span>`).join('')};
+const mag=b=>{if(!hov||!b)return;const x=gsap.quickTo(b,'x',{duration:.5,ease:'power3'}),y=gsap.quickTo(b,'y',{duration:.5,ease:'power3'});b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();x((e.clientX-r.left-r.width/2)*.3);y((e.clientY-r.top-r.height/2)*.3)});b.addEventListener('mouseleave',()=>{x(0);y(0)})};
+const emb=(i,c)=>{const n=8+(i*2)%9,t=[...Array(n).keys()].map(k=>{const a=k/n*6.283+i,P=(r,d)=>(200+Math.cos(a+d)*r).toFixed(0)+' '+(200+Math.sin(a+d)*r).toFixed(0);return`<path d='M${P(120,-.12)}L${P(190,0)}L${P(120,.12)}Z'/>`}).join('');return`<svg class='emb' viewBox='0 0 400 400' aria-hidden='true'><g fill='${c}'>${t}</g><circle cx='200' cy='200' r='${70+(i*5)%30}' fill='none' stroke='${c}' stroke-width='10'/><circle cx='200' cy='200' r='34' fill='${c}'/></svg>`};
+const LA=[`<path d='M0 100V62h30V34h22v28h26V46h18v54h40V20h8V4h4v16h8v80h24V52h30V36h24v64h28V58h36V70h40v30z'/>`,`<rect x='150' y='8' width='100' height='92'/><path d='M160 24h80M160 38h80M160 52h80M160 66h80M160 80h80' stroke='#fff' stroke-opacity='.6' stroke-width='2'/><path d='M0 100V80h140v20zM260 80h140v20H260z'/>`,`<path d='M120 100V58l60-28 60 28v42z'/><path d='M0 84q50-12 100 0t100 0 100 0 100 0M0 94q50-10 100 0t100 0 100 0 100 0' fill='none' stroke='currentColor' stroke-width='3'/>`,`<path d='M0 0L170 38V70L0 100zM400 0L230 38V70L400 100zM170 38H230V70H170z'/>`,`<circle cx='200' cy='110' r='96' fill='none' stroke='currentColor' stroke-width='6'/><circle cx='200' cy='110' r='60' fill='none' stroke='currentColor' stroke-width='6'/><path d='M0 100l20-40 20 40 20-30 20 30 20-50 20 50zM240 100l20-50 20 50 20-30 20 30 20-40 20 40 20-30 20 30z'/>`,`<path d='M30 100V44h340v56z'/><path d='M190 44l10-30 10 30z'/><circle cx='200' cy='36' r='9' fill='none' stroke='currentColor' stroke-width='3'/><path d='M50 62h30M50 78h30M110 62h30M110 78h30M260 62h30M260 78h30M320 62h30M320 78h30' stroke='#fff' stroke-opacity='.55' stroke-width='3'/>`];
+const vart=n=>{const k=n%4,g=[...Array(10).keys()].map(i=>k==0?`M${i*24-40} 300L${i*24+80} 0`:k==1?`M${100-i*10} 160a${i*10} ${i*10} 0 1 0 ${i*20} 0a${i*10} ${i*10} 0 1 0 ${-i*20} 0`:k==2?`M0 ${i*30+10}l20 -14 20 14 20 -14 20 14 20 -14 20 14 20 -14 20 14 20 -14 20 14`:`M100 160L${(100+Math.cos(i*.63+n)*200).toFixed(0)} ${(160+Math.sin(i*.63+n)*200).toFixed(0)}`).join('');return`<svg class='vart' viewBox='0 0 200 300' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><path d='${g}' fill='none' stroke='currentColor' stroke-width='4'/></svg>`};
+const _C=drawC,_D=drawD,_A=drawA,_W=drawW,_V=drawV,_O=openP,_m=menu;
+drawC=function(){_C();const st=$('#cst'),i=CH.findIndex(c=>c[0]===cur),c=CH[i][5];st.insertAdjacentHTML('afterbegin',emb(i,c==='#111111'?'#76736F':c));split(st.querySelector('h3'));gsap.timeline({defaults:{ease:EX}}).fromTo(st.querySelector('.emb'),{rotation:-60,scale:.6,opacity:0},{rotation:0,scale:1,opacity:.95,duration:1.2},0).fromTo(st.querySelector('.wj'),{clipPath:'inset(0 0 100% 0)',y:-60},{clipPath:'inset(0 0 0% 0)',y:0,duration:1},.05).fromTo(st.querySelectorAll('h3 .ch'),{xPercent:-60,opacity:0,skewX:-14},{xPercent:0,opacity:1,skewX:0,duration:.8,stagger:.03},.1).fromTo(st.querySelectorAll('.c,p,.btn'),{y:30,opacity:0},{y:0,opacity:1,stagger:.08,duration:.7},.3);mag($('#of'))};
+drawD=function(){_D();const f=$('#df');f.insertAdjacentHTML('afterbegin','<i class="stp" aria-hidden="true">機密</i>');gsap.fromTo(f,{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.8,ease:IO,onComplete:()=>gsap.set(f,{clearProps:'clipPath'})});gsap.fromTo(f.querySelectorAll('h3,.jp,dl,p'),{y:40,opacity:0},{y:0,opacity:1,stagger:.08,duration:.8,ease:EX,delay:.3});gsap.fromTo('.stp',{scale:2.6,opacity:0,rotation:24},{scale:1,opacity:.9,rotation:9,duration:.35,ease:'power4.in',delay:.75})};
+drawA=function(){_A();split($('#ad h3'));gsap.timeline({defaults:{ease:EX}}).fromTo('#ad h3 .ch',{y:70,opacity:0,skewX:-12},{y:0,opacity:1,skewX:0,duration:.8,stagger:.025}).fromTo('#ad .n',{yPercent:40,opacity:0},{yPercent:0,opacity:.35,duration:1.1},0).fromTo('#ad .r>div',{x:40,opacity:0},{x:0,opacity:1,stagger:.08,duration:.7},.25)};
+drawW=function(){_W();$$('#hz .loc').forEach((l,i)=>{const s=l.querySelector('svg');s.setAttribute('viewBox','0 0 400 100');s.setAttribute('preserveAspectRatio','xMidYMax slice');s.innerHTML=`<g fill='currentColor'>${LA[i]}</g>`})};
+drawV=function(){_V();$$('#vs .vc').forEach(e=>e.insertAdjacentHTML('afterbegin',vart(+e.dataset.n)));const b=$('#vf .big');b.insertAdjacentHTML('afterbegin',vart(vcur));gsap.fromTo(b,{rotation:-12,y:60,opacity:0},{rotation:-3,y:0,opacity:1,duration:1,ease:EX});gsap.fromTo('#vf h3,#vf p,#vf .nv,#vf div>div',{y:40,opacity:0},{y:0,opacity:1,stagger:.08,duration:.8,ease:EX,delay:.15})};
+openP=function(id){_O(id);const t=$('#pc .top'),i=CH.findIndex(c=>c[0]===id),dk=CH[i][5]==='#111111';t.insertAdjacentHTML('afterbegin',emb(i,dk?'#F0EEE8':'#111'));split(t.querySelector('h2'));gsap.timeline({defaults:{ease:EX},delay:.35}).fromTo(t.querySelector('.emb'),{rotation:-90,scale:.5,opacity:0},{rotation:0,scale:1,opacity:.2,duration:1.3},0).fromTo(t.querySelectorAll('h2 .ch'),{yPercent:105},{yPercent:0,duration:.9,stagger:.04},.1).fromTo(t.querySelectorAll('.j,p'),{y:30,opacity:0},{y:0,opacity:1,stagger:.1,duration:.8},.3).fromTo('#pc .pb>div',{y:50,opacity:0},{y:0,opacity:1,stagger:.1,duration:.9},.5)};
+menu=function(o){_m(o);$('main').inert=o;if(o){gsap.fromTo('#ml li a',{yPercent:110,rotate:4},{yPercent:0,rotate:0,duration:.9,ease:EX,stagger:.07,delay:.4,overwrite:true,clearProps:'transform'});gsap.fromTo('#pv b',{yPercent:-30,opacity:0},{yPercent:0,opacity:.9,duration:1,ease:EX,delay:.5});gsap.fromTo('#pv span',{opacity:0},{opacity:1,delay:.8})}};
+let MT,PT;
+function MV(id,dl=0){
+const v=$('#v-'+id),q=s=>[...v.querySelectorAll(s)];
+ScrollTrigger.getAll().forEach(t=>t.kill());MT&&MT.kill();
+if(id==='characters')drawC();if(id==='devils')drawD();if(id==='arcs')drawA();if(id==='world')drawW();if(id==='volumes')drawV();
+gsap.set(q('.rv'),{opacity:0});
+ScrollTrigger.batch(q('.rv'),{start:'top 90%',once:true,onEnter:b=>gsap.fromTo(b,{y:70,opacity:0,clipPath:'inset(0 0 45% 0)'},{y:0,opacity:1,clipPath:'inset(0 0 0% 0)',duration:1.1,ease:EX,stagger:.1,overwrite:true,onComplete:()=>gsap.set(b,{clearProps:'clipPath'})})});
+const h1=q('.ph h1')[0];
+if(h1)gsap.timeline({defaults:{ease:EX},delay:dl}).fromTo(h1,{clipPath:'inset(0 0 100% 0)',y:50},{clipPath:'inset(0 0 -10% 0)',y:0,duration:1.1}).fromTo(h1.querySelector('span'),{scaleX:0,transformOrigin:'0 50%'},{scaleX:1,duration:.9},.15).fromTo(q('.ph .jp'),{opacity:0,y:-60},{opacity:1,y:0,duration:1.2},.1).from(q('.tog button'),{x:-40,opacity:0,stagger:.08,duration:.7},.4);
+if(id==='characters')gsap.from('#cl button',{x:-50,opacity:0,stagger:.05,duration:.8,ease:EX,delay:dl+.3});
+if(id==='devils')gsap.from('#dl button',{x:-60,opacity:0,stagger:.05,duration:.8,ease:EX,delay:dl+.3});
+if(id==='arcs')gsap.from('#at button',{y:30,opacity:0,stagger:.04,duration:.7,ease:EX,delay:dl+.3});
+if(id==='world'){gsap.from(q('.loc'),{y:90,opacity:0,stagger:.12,duration:1.1,ease:EX,delay:dl+.3});q('.loc').forEach(l=>{const s=l.querySelector('svg'),j=l.querySelector(':scope>.j');[[s,-50,50],[j,40,-40]].forEach(([e,a,b])=>e&&gsap.fromTo(e,{x:a},{x:b,ease:'none',scrollTrigger:{trigger:l,scroller:'#hz',horizontal:true,start:'left right',end:'right left',scrub:true}}))})}
+if(id==='volumes')gsap.from('#vs .vc',{x:140,opacity:0,stagger:.025,duration:1,ease:EX,delay:dl+.3,clearProps:'transform,opacity'});
+if(id==='lore'){gsap.fromTo(q('.lr em'),{scale:0,rotation:-140},{scale:1,rotation:-12,ease:'back.out(1.8)',duration:.9,stagger:.1,scrollTrigger:{trigger:'#lr',start:'top 80%'}});q('.lr>div').forEach(r=>[['.a',-12],['.b',12]].forEach(([s,x])=>gsap.fromTo(r.querySelector(s),{xPercent:x},{xPercent:0,ease:'none',scrollTrigger:{trigger:r,start:'top 95%',end:'top 50%',scrub:true}})))}
+if(id==='home'){
+const hero=$('#hero'),sv=hero.querySelector('svg'),t1=hero.querySelector('.t1'),t2=hero.querySelector('.t2');split(t1);split(t2);
+const d=(ld.style.display==='none'||ld.classList.contains('out'))?dl+.2:(seen||RM?.2:1.85);
+gsap.set(sv,{xPercent:-30});
+gsap.timeline({delay:d,defaults:{ease:EX}}).fromTo('.sun',{clipPath:'circle(0% at 50% 50%)'},{clipPath:'circle(72% at 50% 50%)',duration:1.6},0).fromTo(t1.children,{yPercent:115},{yPercent:0,duration:1.1,stagger:.05},.1).fromTo(t2.children,{xPercent:120,skewX:-20},{xPercent:0,skewX:0,duration:1,stagger:.07},.35).fromTo(sv,{clipPath:'inset(100% 0 0 0)',yPercent:10},{clipPath:'inset(0% 0 0 0)',yPercent:0,duration:1.4,ease:IO},.2).fromTo('.vt',{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)',duration:1.2},.5).fromTo('.hero .jp',{opacity:0,y:-30},{opacity:1,y:0,duration:1},.7).from('.go a',{xPercent:-120,stagger:.1,duration:.8},.9).from('header>*',{y:-40,opacity:0,stagger:.08,duration:.8},.9);
+gsap.timeline({scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:.8}}).to(sv,{y:-60,ease:'none'},0).to('.sun',{yPercent:25,scale:1.15,ease:'none'},0).to(t1,{xPercent:-14,ease:'none'},0).to(t2,{xPercent:10,ease:'none'},0).to('.vt',{y:80,ease:'none'},0);
+if(hov){const sx=gsap.quickTo('.sun','x',{duration:1,ease:'power3'}),jx=gsap.quickTo('.hero .jp','x',{duration:1.2,ease:'power3'}),vx=gsap.quickTo(sv,'x',{duration:1.4,ease:'power3'});hero.onmousemove=e=>{const p=e.clientX/innerWidth-.5;sx(p*-40);jx(p*30);vx(p*24)}}
+const mq=$('.mq div');MT=gsap.to(mq,{xPercent:-50,duration:22,ease:'none',repeat:-1});
+ScrollTrigger.create({start:0,end:'max',onUpdate:s=>{MT.timeScale(1+Math.min(Math.abs(s.getVelocity())/300,8));gsap.to(MT,{timeScale:1,duration:1.2,overwrite:true,ease:'power2.out'})}});
+gsap.fromTo('.p1',{clipPath:'polygon(0 0,100% 0,100% 0%,0 0%)'},{clipPath:'polygon(0 0,100% 7%,100% 100%,0 100%)',ease:'none',scrollTrigger:{trigger:'.p1',start:'top 95%',end:'top 40%',scrub:.5}});
+gsap.fromTo('.p2',{clipPath:'polygon(100% 0,100% 0,100% 100%,100% 100%)'},{clipPath:'polygon(0 0,100% 0,100% 93%,0 100%)',ease:'none',scrollTrigger:{trigger:'.p2',start:'top 95%',end:'top 35%',scrub:.5}});
+[['.p1 h2',-10],['.p2 h2',10]].forEach(([s,x])=>gsap.fromTo(s,{xPercent:x},{xPercent:0,ease:'none',scrollTrigger:{trigger:s,start:'top 95%',end:'top 40%',scrub:true}}));
+if(!M)q('.part .bg').forEach(b=>gsap.fromTo(b,{yPercent:-8},{yPercent:10,ease:'none',scrollTrigger:{trigger:b.parentNode,start:'top bottom',end:'bottom top',scrub:true}}));
+}
+requestAnimationFrame(()=>ScrollTrigger.refresh());
+}
+removeEventListener('hashchange',show);
+const show2=function(){const h=(location.hash||'#home').slice(1),id=document.getElementById('v-'+h)?h:'home',v=$('#v-'+id);
+const swap=()=>{$$('.view').forEach(x=>x.classList.remove('on'));v.classList.add('on');scrollTo({top:0,behavior:'instant'});$('#pt').textContent=h==='home'?'PART 1 — 2 · チェンソーマン':h.toUpperCase();MV(id,.35)};
+PT&&PT.progress(1);
+PT=gsap.timeline().fromTo(wp,{clipPath:IN},{clipPath:FULL,duration:.5,ease:IO}).fromTo(wk,{clipPath:IN},{clipPath:FULL,duration:.5,ease:IO},.12).add(swap).to(wp,{clipPath:OUT,duration:.55,ease:IO},'+=.05').to(wk,{clipPath:OUT,duration:.55,ease:IO},'<.1')};
+addEventListener('hashchange',show2);
+$$('.btn,#mb').forEach(mag);
+document.fonts&&document.fonts.ready.then(()=>ScrollTrigger.refresh());
+const h0=(location.hash||'#home').slice(1);MV(document.getElementById('v-'+h0)?h0:'home');
+})();
+</script></body></html>

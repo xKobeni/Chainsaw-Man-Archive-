@@ -1,0 +1,46 @@
+/* Migration adjustments; the prototype cascade above remains in its original order. */
+main:focus { outline: none; }
+.view { overflow-x: clip; }
+button:disabled { opacity: .35; cursor: not-allowed; }
+.skip-link { position: fixed; top: -100px; left: 12px; z-index: 110; padding: 12px; background: var(--w); color: var(--k); }
+.skip-link:focus { top: 12px; }
+.menu-close { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 22px; z-index: 2; display: flex; align-items: center; gap: 8px; font: 18px var(--d); letter-spacing: .14em; padding: 10px 16px; border: 2px solid var(--w); min-height: 44px; background: var(--k); color: var(--w); }
+#mn { overflow-y: auto; }
+#mn.on { z-index: 76; }
+#pf .x { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.relationship { display: inline-block; border-bottom: 2px solid var(--r); margin: 0 10px 6px 0; min-height: 44px; }
+.relationship:hover { background: var(--r); }
+.fl .red:focus-visible, .fl .red.revealed { color: var(--w); }
+.fl .red { min-height: 44px; }
+.stage-artwork { position: relative; margin-left: auto; height: 240px; width: min(70%, 250px); z-index: 1; }
+.profile-artwork { position: absolute; right: 7vw; top: 8vh; width: min(35vw, 350px); height: 60vh; }
+#pf .top>.j, #pf .top>h2, #pf .top>p { position: relative; z-index: 1; }
+.ad .l>p { position: relative; z-index: 1; }
+#ld { pointer-events: none; }
+#ld h1 { margin: 0; }
+.ph .jp, .emb { pointer-events: none; }
+@media (max-width: 760px) {
+  header { padding: 12px 16px; }
+  #pt { display: none; }
+  #mb, .menu-close { right: 16px; }
+  .cs, .ad { grid-template-columns: 1fr; }
+  .cl { padding-bottom: 12px; }
+  .cl button:hover, .cl button.on { transform: none; }
+  .st { min-height: 65vh; }
+  .st h3 { overflow-wrap: anywhere; }
+  .ad .l h3 { overflow-wrap: anywhere; }
+  .ad .r { margin-top: 28px; padding-left: 20px; }
+  .fl { padding: 24px; }
+  .fl dl { grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: 8px; }
+  .loc { min-height: 520px; padding: 24px; }
+  .loc:nth-child(even) { min-height: 450px; }
+  .profile-artwork { top: 12vh; width: 55vw; height: 45vh; opacity: .75; }
+  #pf .top h2 { overflow-wrap: anywhere; font-size: clamp(48px, 15vw, 100px); }
+  .ph { padding-top: 130px; }
+  .ph h1 { font-size: clamp(48px, 12vw, 90px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; }
+}

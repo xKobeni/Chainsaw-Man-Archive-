@@ -1,0 +1,50 @@
+.collection { padding: 0 5vw 8vh; }
+.topline, .galleryHeading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; font: 11px/1.5 var(--m); letter-spacing: .16em; color: var(--gl); }
+.topline { border-top: 1px solid #585450; padding: 16px 0 0; }
+.feature { position: relative; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr); align-items: center; gap: clamp(30px, 6vw, 110px); min-height: 690px; padding: 38px clamp(4px, 3vw, 48px) 56px; border-bottom: 1px solid #585450; background: linear-gradient(115deg, color-mix(in srgb, var(--c) 14%, transparent), transparent 65%); }
+.coverStage { position: relative; width: min(100%, 455px); margin: 0 auto; transform: rotate(-2deg); filter: drop-shadow(20px 24px 0 rgba(0,0,0,.7)); }
+.spine { position: absolute; left: -12px; top: 0; bottom: 0; width: 12px; background: var(--r); }
+.copy { position: relative; z-index: 1; max-width: 500px; }
+.part { font: 12px/1.5 var(--m); letter-spacing: .2em; color: var(--o); }
+.number { margin: 22px 0 2px; font: clamp(56px, 7vw, 112px)/.87 var(--d); letter-spacing: -.02em; color: var(--w); }
+.title { font: clamp(32px, 4vw, 62px)/1 var(--d); text-transform: uppercase; color: var(--w); }
+.details { display: grid; gap: 0; margin-top: 36px; border-top: 1px solid #585450; }
+.details > div { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid #363330; }
+.details dt { font: 10px/1.7 var(--m); letter-spacing: .14em; color: var(--gl); }
+.details dd { font: 13px/1.6 var(--m); color: var(--w); }
+.arcLink { display: inline-block; margin: 0 12px 6px 0; border-bottom: 1px solid var(--r); }
+.arcLink:hover, .arcLink:focus-visible, .sourceLink:hover, .sourceLink:focus-visible { color: var(--o); }
+.sourceLink { border-bottom: 1px solid var(--r); }
+.context { margin-top: 16px; max-width: 42ch; font: 11px/1.65 var(--m); color: var(--gl); }
+.controls { display: flex; gap: 10px; margin-top: 28px; }
+.controls button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; min-width: 110px; padding: 10px 16px; border: 1px solid var(--w); font: 19px var(--d); letter-spacing: .08em; transition: background .25s, color .25s, border-color .25s; }
+.controls button:not(:disabled):hover { background: var(--w); color: var(--k); }
+.controls button:disabled { opacity: .35; }
+.galleryHeading { margin-top: 46px; padding-bottom: 10px; border-bottom: 1px solid #585450; }
+.galleryHeading h3 { font: 32px/1 var(--d); letter-spacing: .04em; color: var(--w); }
+.gallery { display: flex; gap: clamp(12px, 2vw, 26px); overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; scroll-padding-inline: 2px; padding: 22px 2px 32px; scrollbar-color: var(--r) #2b2927; }
+.thumbnail { flex: 0 0 clamp(136px, 14vw, 182px); min-width: 0; text-align: left; scroll-snap-align: center; }
+.thumbnailCover { display: block; width: 100%; border: 2px solid transparent; transition: transform .32s ease, box-shadow .32s ease, border-color .32s ease; }
+.thumbnail:hover .thumbnailCover, .thumbnail:focus-visible .thumbnailCover { transform: translateY(-6px) scale(1.02); box-shadow: 9px 11px 0 #050505; }
+.selected .thumbnailCover { border-color: var(--r); box-shadow: 7px 8px 0 var(--r); }
+.thumbnailMeta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding: 13px 2px 0; color: var(--gl); font: 10px var(--m); letter-spacing: .07em; }
+.thumbnailMeta b { font: 24px/1 var(--d); color: var(--w); }
+.selected .thumbnailMeta b { color: var(--r); }
+.footnote { max-width: 75ch; margin-top: 6px; font: 11px/1.7 var(--m); color: var(--gl); }
+@media (max-width: 760px) {
+  .collection { padding: 0 5vw 7vh; }
+  .topline span:last-child { display: none; }
+  .feature { grid-template-columns: 1fr; min-height: 0; gap: 42px; padding: 28px 0 50px; }
+  .coverStage { width: min(75vw, 360px); }
+  .copy { max-width: none; }
+  .number { font-size: clamp(58px, 16vw, 90px); }
+  .title { font-size: clamp(34px, 10vw, 56px); }
+  .details { margin-top: 26px; }
+  .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 10px; }
+  .controls button { flex: 1; min-width: 0; }
+  .galleryHeading { align-items: center; margin-top: 36px; }
+  .galleryHeading h3 { font-size: 28px; }
+  .galleryHeading span { max-width: 116px; text-align: right; font-size: 9px; }
+  .thumbnail { flex-basis: clamp(132px, 38vw, 164px); }
+}
+@media (prefers-reduced-motion: reduce) { .thumbnailCover, .controls button { transition: none; } }
