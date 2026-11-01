@@ -57,8 +57,9 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
     let seen = false;
     try { seen = sessionStorage.getItem("csm") === "1"; } catch { /* Storage is optional. */ }
     const reduced = !matchMedia(motionQuery).matches;
-    if (seen || reduced) {
+    if (reduced) {
       document.documentElement.dataset.csmSeen = "1";
+      document.documentElement.dataset.csmReveal = "1";
       gsap.set("#ld", { display: "none" });
       try { sessionStorage.setItem("csm", "1"); } catch { /* Storage is optional. */ }
     } else {
@@ -66,9 +67,15 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
         document.documentElement.dataset.csmSeen = "1";
         try { sessionStorage.setItem("csm", "1"); } catch { /* Storage is optional. */ }
       } })
-        .to("#ld i", { scaleX: 1, duration: .28, ease: "power3.out" }, 0)
-        .fromTo("#ld h1", { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: .48, ease: "expo.out" }, .14)
-        .to("#ld", { clipPath: "polygon(0 0,100% 0,100% 0,0 0)", duration: .65, ease: "power4.inOut" }, .6)
+        .to("#ld i", { scaleX: 1, duration: seen ? 0 : .28, ease: "power3.out" }, 0)
+        .fromTo("#ld .ld-word", { y: seen ? 0 : 28, opacity: seen ? 1 : 0 }, { y: 0, opacity: 1, duration: seen ? 0 : .48, ease: "expo.out" }, seen ? 0 : .14)
+        .call(() => {
+          document.documentElement.dataset.csmReveal = "1";
+          window.dispatchEvent(new Event("csm:reveal"));
+        }, undefined, seen ? .18 : 1.05)
+        .to("#ld .ld-top", { yPercent: -100, duration: 1.05, ease: "power4.inOut" }, seen ? .18 : 1.05)
+        .to("#ld .ld-bottom", { yPercent: 100, duration: 1.05, ease: "power4.inOut" }, seen ? .18 : 1.05)
+        .to("#ld i", { scaleX: 0, duration: .2, ease: "power4.inOut" }, seen ? .18 : 1.05)
         .set("#ld", { display: "none" });
     }
     const media = gsap.matchMedia();
@@ -134,11 +141,11 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
   const item = navigation[preview];
   return <ArchiveContext.Provider value={{ navigate, part, character, selectPart, selectCharacter, openProfile: setProfile, devil, setDevil, arc, setArc, volume, setVolume }}>
     <div ref={root}>
-      <div id="ld" role="status" aria-label="Loading archive"><i /><h1 className="d">Chainsaw<br />Man</h1></div>
+      <div id="ld" role="status" aria-label="Loading archive"><i /><h1 className="d"><span className="ld-half ld-top"><span className="ld-word">Chainsaw</span></span><span className="ld-half ld-bottom"><span className="ld-word">Man</span></span></h1></div>
       <div id="wp" aria-hidden="true" /><div id="wk" aria-hidden="true" />
       <a className="skip-link" href="#main">SKIP TO CONTENT</a>
       <header inert={menuOpen || !!profile}>
-        <TransitionLink href="/" className="wm" aria-label="Home">CSM<b>{"//"}</b>ARCHIVE</TransitionLink>
+        <TransitionLink href="/" className="wm" aria-label="Home"><span>CSM</span><b>{"//"}</b><span>ARCHIVE</span></TransitionLink>
         <span id="pt">{pathname === "/" ? "PART 1 — 2 · チェンソーマン" : pathname.slice(1).toUpperCase()}</span>
         <button id="mb" aria-expanded={menuOpen} aria-controls="mn" onClick={() => setMenuOpen(true)}>MENU</button>
       </header>

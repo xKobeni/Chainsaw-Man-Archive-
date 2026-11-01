@@ -204,20 +204,43 @@ test("home saga links select the intended part and repeated navigation cleans sc
 });
 
 test("home intro plays once per session and scroll sections settle visibly", async ({ page }) => {
+  await page.addInitScript(() => {
+    const gaps: number[] = [];
+    (window as Window & { __splitGaps?: number[] }).__splitGaps = gaps;
+    window.addEventListener("csm:reveal", () => {
+      const record = () => {
+        const top = document.querySelector(".ld-top");
+        const bottom = document.querySelector(".ld-bottom");
+        const loader = document.querySelector("#ld");
+        if (!top || !bottom || !loader || getComputedStyle(loader).display === "none") return;
+        gaps.push(bottom.getBoundingClientRect().top - top.getBoundingClientRect().bottom);
+        requestAnimationFrame(record);
+      };
+      requestAnimationFrame(record);
+    }, { once: true });
+  });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#ld")).toBeHidden({ timeout: 5000 });
+  const splitGaps = await page.evaluate(() => (window as Window & { __splitGaps?: number[] }).__splitGaps ?? []);
+  expect(Math.max(...splitGaps)).toBeGreaterThan(100);
   await expect(page.locator(".hero h1")).toHaveText("CHAINSAWMAN");
+  await expect(page.locator("header")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(page.locator("header")).toHaveCSS("color", "rgb(17, 17, 17)");
+  await expect(page.locator(".wm b")).toHaveCSS("color", "rgb(207, 38, 45)");
   await expect.poll(() => page.locator(".hero img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   expect(await page.evaluate(() => sessionStorage.getItem("csm"))).toBe("1");
 
   for (const section of [".p1", ".p2", ".end"]) {
     await page.locator(section).scrollIntoViewIfNeeded();
+    if (section === ".p2") await page.evaluate(() => scrollBy({ top: 100, behavior: "instant" }));
+    await expect(page.locator("header")).toHaveCSS("color", section === ".p1" ? "rgb(255, 255, 255)" : "rgb(17, 17, 17)");
     await expect.poll(() => page.locator(section).locator("[data-home-reveal]").first().evaluate((element) => getComputedStyle(element).opacity)).toBe("1");
     await expect(page.locator(section).getByRole("link")).toBeVisible();
   }
   await page.reload({ waitUntil: "domcontentloaded" });
   await expect(page.locator("html")).toHaveAttribute("data-csm-seen", "1");
-  await expect(page.locator("#ld")).toHaveCSS("display", "none");
+  await expect(page.locator("#ld")).toBeHidden({ timeout: 3000 });
+  await expect(page.locator(".hero .t1")).toHaveCSS("opacity", "1");
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
   const cta = await page.locator(".hero .go a").first().boundingBox();

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning><body>
-    <Script id="archive-intro-session" strategy="beforeInteractive">{`try { if (sessionStorage.getItem("csm") === "1") document.documentElement.dataset.csmSeen = "1"; } catch {}`}</Script>
+    <Script id="archive-intro-session" strategy="beforeInteractive">{`try { if (sessionStorage.getItem("csm") === "1") document.documentElement.dataset.csmSeen = "1"; if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.dataset.csmReduced = "1"; } catch {}`}</Script>
     <ArchiveShell>{children}</ArchiveShell>
   </body></html>;
 }

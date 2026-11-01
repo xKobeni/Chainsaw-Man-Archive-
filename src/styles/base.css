@@ -68,10 +68,14 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:14px 22px;
-mix-blend-mode:difference;
+background:transparent;
 color:#fff}
 
+html:has(#v-home):not([data-header-dark="1"]) header{color:var(--k)}
+
 .wm{
+display:inline-flex;
+align-items:baseline;
 font-family:var(--d);
 font-size:22px;
 letter-spacing:.06em}
@@ -89,7 +93,7 @@ font-family:var(--d);
 font-size:18px;
 letter-spacing:.14em;
 padding:10px 16px;
-border:2px solid #fff;
+border:2px solid currentColor;
 min-height:44px}
 
 #mb:hover{

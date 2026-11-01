@@ -7,9 +7,19 @@ import { magneticHover } from "./magnetic";
 export function PageMotion({ page, children }: { page: string; children: ReactNode }) {
   const root = useRef<HTMLElement>(null);
   useGSAP(() => {
+    if (page === "home") {
+      document.documentElement.dataset.headerDark = "0";
+      ScrollTrigger.create({
+        trigger: ".p1",
+        start: "top 50px",
+        end: "bottom 50px",
+        onToggle: (self) => { document.documentElement.dataset.headerDark = self.isActive ? "1" : "0"; },
+      });
+    }
     const media = gsap.matchMedia();
     media.add(motionQuery, () => {
       const select = gsap.utils.selector(root);
+      let onReveal: (() => void) | undefined;
       select(".rv").forEach((element: HTMLElement) => gsap.fromTo(element,
         { y: 70, opacity: 0, clipPath: "inset(0 0 45% 0)" },
         { y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: element, start: "top 90%", once: true } }));
@@ -37,13 +47,17 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
       if (page === "home") {
         let seenLoader = false;
         try { seenLoader = sessionStorage.getItem("csm") === "1"; } catch { /* Storage is optional. */ }
-        gsap.timeline({ delay: seenLoader ? .05 : .22, defaults: { ease: "expo.out" } })
+        const intro = gsap.timeline({ paused: true, defaults: { ease: "expo.out" } })
           .fromTo(".hero .sun", { scale: .82, opacity: 0 }, { scale: 1, opacity: 1, duration: .7 }, 0)
           .fromTo(".hero .t1", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: .7, clearProps: "transform,opacity" }, 0)
           .fromTo(".hero .t2", { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: .7, clearProps: "transform,opacity" }, .12)
           .fromTo(".hero-artwork", { clipPath: "inset(18% 0 0 0)", y: 24, opacity: 0 }, { clipPath: "inset(0 0 0 0)", y: 0, opacity: 1, duration: .8, clearProps: "clipPath,transform,opacity" }, .1)
           .fromTo("[data-hero-copy]", { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: .08, duration: .55, clearProps: "transform,opacity" }, .28)
           .fromTo(".hero-footer", { opacity: 0 }, { opacity: 1, duration: .5, clearProps: "opacity" }, .4);
+        if (seenLoader) intro.timeScale(1.8);
+        onReveal = () => intro.play();
+        if (document.documentElement.dataset.csmReveal === "1") onReveal();
+        else window.addEventListener("csm:reveal", onReveal, { once: true });
         select(".part,.end").forEach((section: HTMLElement) => {
           const reveal = section.querySelectorAll("[data-home-reveal]");
           gsap.fromTo(reveal, { y: 34, opacity: 0 }, {
@@ -58,6 +72,7 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
         });
       }
       ScrollTrigger.refresh();
+      return () => { if (onReveal) window.removeEventListener("csm:reveal", onReveal); };
     });
     media.add(`${motionQuery} and (min-width: 761px)`, () => {
       if (page !== "home") return;
