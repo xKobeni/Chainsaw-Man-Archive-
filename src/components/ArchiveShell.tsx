@@ -11,6 +11,7 @@ import { magneticHover } from "@/animations/magnetic";
 import { useModal } from "@/lib/useModal";
 import type { Part } from "@/types/archive";
 import { CharacterProfile } from "./CharacterProfile";
+import { CustomCursor } from "./CustomCursor";
 import { TransitionLink } from "./TransitionLink";
 
 interface ArchiveContextValue {
@@ -59,7 +60,7 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
   useGSAP(() => {
     const media = gsap.matchMedia();
     media.add(`${motionQuery} and (min-width: 761px) and (hover: hover) and (pointer: fine)`, () => {
-      const scroll = new Lenis({ lerp: .18, smoothWheel: true, syncTouch: false, allowNestedScroll: true, stopInertiaOnNavigate: true, prevent: (node) => !!node.closest("#mn,#pf") });
+      const scroll = new Lenis({ lerp: .12, smoothWheel: true, syncTouch: false, allowNestedScroll: true, stopInertiaOnNavigate: true, prevent: (node) => !!node.closest("#mn,#pf") });
       lenis.current = scroll;
       if (modalOpen.current) scroll.stop();
       scroll.on("scroll", ScrollTrigger.update);
@@ -208,12 +209,13 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
   const item = navigation[preview];
   return <ArchiveContext.Provider value={{ navigate, part, character, selectPart, selectCharacter, openProfile: setProfile, devil, setDevil, arc, setArc, volume, setVolume }}>
     <div ref={root}>
+      <CustomCursor />
       <div id="ld" role="status" aria-label="Loading archive"><i /><h1 className="d"><span className="ld-half ld-top"><span className="ld-word">Chainsaw</span></span><span className="ld-half ld-bottom"><span className="ld-word">Man</span><span className="ld-activity" aria-hidden="true" /></span></h1></div>
       <div id="wp" aria-hidden="true" /><div id="wk" aria-hidden="true" />
       <a className="skip-link" href="#main">SKIP TO CONTENT</a>
       <header inert={menuOpen || !!profile}>
         <TransitionLink href="/" className="wm" aria-label="Home"><span>CSM</span><b>{"//"}</b><span>ARCHIVE</span></TransitionLink>
-        <span id="pt">{pathname === "/" ? "PART 1 — 2 · チェンソーマン" : pathname.slice(1).toUpperCase()}</span>
+        <span id="pt">{pathname === "/" ? "PART 1 — 2 · チェンソーマン" : navigation.find((entry) => entry.href === pathname)?.label ?? pathname.slice(1).toUpperCase()}</span>
         <button id="mb" aria-expanded={menuOpen} aria-controls="mn" onClick={() => setMenuOpen(true)}>MENU</button>
       </header>
       <nav ref={menu} id="mn" className={menuOpen ? "on" : ""} aria-label="Main" aria-modal={menuOpen || undefined} role="dialog" inert={!menuOpen}>

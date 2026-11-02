@@ -1,7 +1,5 @@
-import { PageMotion } from "@/animations/PageMotion";
-import { DevilsExplorer } from "@/components/DevilsExplorer";
+import { permanentRedirect } from "next/navigation";
 
-export const metadata = { title: "Devils & Fiends" };
 export default function DevilsPage() {
-  return <PageMotion page="devils"><DevilsExplorer /></PageMotion>;
+  permanentRedirect("/classified-files");
 }

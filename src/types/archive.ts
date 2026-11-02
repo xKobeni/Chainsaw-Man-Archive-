@@ -16,6 +16,9 @@ export interface Devil {
   id: string;
   name: string;
   japanese: string;
+  type: "devil" | "fiend";
+  subcategory?: string;
+  artwork?: string | null;
   contractor: string;
   threat: string;
   description: string;

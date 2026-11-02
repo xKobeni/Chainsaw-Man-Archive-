@@ -30,7 +30,7 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
           .fromTo(".ph .jp", { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: .65, clearProps: "transform,opacity" }, .15);
         if (select("[data-heading-detail]").length) heading.fromTo("[data-heading-detail]", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .7, clearProps: "transform,opacity" }, .25);
       }
-      const list = select("#cl button,#dl button,#at button,.tog button");
+      const list = select("#cl button,#at button,.tog button");
       if (list.length) gsap.from(list, { x: -50, opacity: 0, stagger: .05, duration: .8, ease: "expo.out", delay: .3, clearProps: "transform,opacity" });
       if (page === "volumes") gsap.from("[data-volume]", { x: 50, opacity: 0, stagger: .025, duration: .75, ease: "expo.out", delay: .3, clearProps: "transform,opacity" });
       if (page === "lore") {
@@ -41,45 +41,47 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
       }
       if (page === "home") {
         const throughSplash = document.documentElement.dataset.csmReveal !== "1";
-        const offset = throughSplash ? .3 : 0;
+        const offset = throughSplash ? .24 : 0;
+        gsap.to(".mq-track", { xPercent: -50, duration: 45, ease: "none", repeat: -1 });
         const intro = gsap.timeline({ paused: true, defaults: { ease: "expo.out" } })
-          .fromTo(".hero .sun", { scale: .82, opacity: 0 }, { scale: 1, opacity: 1, duration: .7 }, 0)
-          .fromTo(".hero .t1", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: .7, clearProps: "transform,opacity" }, offset)
-          .fromTo(".hero .t2", { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: .7, clearProps: "transform,opacity" }, offset + .12)
-          .fromTo(".hero-artwork", { clipPath: "inset(18% 0 0 0)", y: 24, opacity: 0 }, { clipPath: "inset(0 0 0 0)", y: 0, opacity: 1, duration: .8, clearProps: "clipPath,transform,opacity" }, throughSplash ? .22 : .1)
-          .fromTo("[data-hero-copy]", { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: .08, duration: .55, clearProps: "transform,opacity" }, offset + .28)
-          .fromTo(".hero-visual-label,.hero-visual-jp", { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: .08, duration: .55, clearProps: "transform,opacity" }, offset + .35)
-          .fromTo(".hero-footer", { opacity: 0 }, { opacity: 1, duration: .5, clearProps: "opacity" }, offset + .4);
+          .fromTo(".hero .sun", { scale: .65, opacity: 0 }, { scale: 1, opacity: 1, duration: .85, clearProps: "opacity" }, 0)
+          .fromTo(".hero .t1", { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: .78, clearProps: "transform,opacity" }, offset)
+          .fromTo(".hero .t2", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: .78, clearProps: "transform,opacity" }, offset + .08)
+          .fromTo(".hero-artwork", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0 0 0 0)", duration: .95, clearProps: "clipPath" }, offset + .06)
+          .fromTo(".hero-slash", { clipPath: "inset(0 100% 0 0)", opacity: 0 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: .75, clearProps: "clipPath,opacity" }, offset + .22)
+          .fromTo(".hero-tagline-main .word span", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .1, duration: .6, clearProps: "transform,opacity" }, offset + .48)
+          .fromTo(".hero-tagline-sub", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .55, clearProps: "transform,opacity" }, offset + .85)
+          .fromTo(".hero-scroll", { opacity: 0 }, { opacity: 1, duration: .45, clearProps: "opacity" }, offset + 1.05);
         if (!throughSplash) intro.timeScale(1.8);
         onReveal = () => intro.play();
         if (document.documentElement.dataset.csmReveal === "1") onReveal();
         else window.addEventListener("csm:reveal", onReveal, { once: true });
+        const indicator = select(".hero-scroll")[0];
+        if (indicator) ScrollTrigger.create({
+          trigger: select(".hero")[0], start: "top top", end: "bottom top",
+          onUpdate: (self) => indicator.classList.toggle("is-past", self.progress > .55),
+        });
         select(".part,.end").forEach((section: HTMLElement) => {
           const lines = section.querySelectorAll("[data-home-line]");
-          gsap.fromTo(lines, { y: section.classList.contains("p2") ? -35 : 35, opacity: 0, clipPath: "inset(0 0 100% 0)" }, {
-            y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", stagger: .11, duration: .85, ease: "expo.out", clearProps: "transform,opacity,clipPath",
-            scrollTrigger: { trigger: section, start: "top 78%", once: true },
-          });
           const reveal = section.querySelectorAll("[data-home-reveal]");
-          gsap.fromTo(reveal, { y: 34, opacity: 0 }, {
-            y: 0, opacity: 1, stagger: .1, duration: .72, ease: "expo.out", clearProps: "transform,opacity",
-            scrollTrigger: { trigger: section, start: "top 82%", once: true },
-          });
           const art = section.querySelector("[data-home-art]");
-          if (art) gsap.fromTo(art, { clipPath: section.classList.contains("p2") ? "inset(0 0 0 18%)" : "inset(12% 0 0 0)", y: 28, opacity: 0 }, {
-            clipPath: "inset(0 0 0 0)", y: 0, opacity: 1, duration: .9, ease: "power3.out", clearProps: "clipPath,transform,opacity",
-            scrollTrigger: { trigger: section, start: "top 82%", once: true },
+          const revealTimeline = gsap.timeline({
+            defaults: { ease: "power3.out" },
+            scrollTrigger: { trigger: section, start: "top 84%", once: true },
           });
+          if (art) revealTimeline.fromTo(art, { clipPath: section.classList.contains("p2") ? "inset(0 0 0 18%)" : "inset(12% 0 0 0)", y: 24, opacity: 0 }, {
+            clipPath: "inset(0 0 0 0)", y: 0, opacity: 1, duration: 1.05, clearProps: "clipPath,transform,opacity",
+          }, 0);
+          revealTimeline.fromTo(lines, { y: section.classList.contains("p2") ? -28 : 28, opacity: 0, clipPath: "inset(0 0 100% 0)" }, {
+            y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", stagger: .1, duration: .9, clearProps: "transform,opacity,clipPath",
+          }, .12);
+          revealTimeline.fromTo(reveal, { y: 26, opacity: 0 }, {
+            y: 0, opacity: 1, stagger: .08, duration: .75, clearProps: "transform,opacity",
+          }, .34);
         });
       }
       ScrollTrigger.refresh();
       return () => { if (onReveal) window.removeEventListener("csm:reveal", onReveal); };
-    });
-    media.add(`${motionQuery} and (min-width: 761px)`, () => {
-      if (page !== "home") return;
-      const hero = root.current?.querySelector(".hero");
-      if (hero) gsap.to(".hero-visual", { y: -24, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: .6 } });
-      gsap.to(".mq div", { xPercent: -50, duration: 28, ease: "none", repeat: -1 });
     });
     media.add(`${motionQuery} and (hover: hover) and (pointer: fine)`, () => {
       const hero = root.current?.querySelector<HTMLElement>(".hero");
@@ -94,6 +96,14 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
       }
       buttons.forEach((button) => cleanup.push(magneticHover(button)));
       return () => cleanup.forEach((fn) => fn());
+    });
+    media.add(motionQuery + " and (min-width: 761px)", () => {
+      if (page !== "home") return;
+      const hero = root.current?.querySelector(".hero");
+      if (!hero) return;
+      const scrollTrigger = { trigger: hero, start: "top top", end: "bottom top", scrub: .7 };
+      gsap.to(".hero .sun", { yPercent: -9, ease: "none", scrollTrigger });
+      gsap.to(".hero-artwork", { yPercent: 6, ease: "none", scrollTrigger });
     });
     let active = true;
     document.fonts.ready.then(() => { if (active) ScrollTrigger.refresh(); });

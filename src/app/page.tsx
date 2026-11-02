@@ -4,31 +4,27 @@ import { SagaLink } from "@/components/SagaLink";
 import { TransitionLink } from "@/components/TransitionLink";
 import { characters } from "@/data/characters";
 
+const tickerText = "DEVIL HUNTERS ★ CONTRACTS ★ BLOOD ★ HELL ★ CHAINSAW ★  ".repeat(6);
+
 export default function HomePage() {
   return <PageMotion page="home">
     <section className="hero" id="hero">
-      <div className="hero-inner">
-        <div className="hero-copy">
-          <p className="hero-kicker" data-hero-copy>FILE 000 / THE CHAINSAW MAN ARCHIVE</p>
-          <h1 className="d"><span className="t1">CHAINSAW</span><span className="t2">MAN</span></h1>
-          <p className="hero-deck" data-hero-copy>Devils. Hunters. Contracts.<br />Every story leaves a mark.</p>
-          <div className="go" data-hero-copy>
-            <SagaLink href="/characters" part="1">PART 1 — PUBLIC SAFETY</SagaLink>
-            <SagaLink href="/arcs" part="2">PART 2 — ACADEMY</SagaLink>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <div className="sun" aria-hidden="true" />
-          <div className="hero-slash" aria-hidden="true" />
-          <div className="hero-artwork" data-hero-art><CharacterArtwork name="Chainsaw Man" src={characters[0].artwork} priority sizes="(max-width: 760px) 88vw, 42vw" /></div>
-          <span className="hero-visual-label">DENJI / THE CHAINSAW DEVIL</span>
-          <span className="hero-visual-jp j" aria-hidden="true">チェンソーマン</span>
-        </div>
+      <div className="sun" aria-hidden="true" />
+      <h1 className="d"><span className="t1">CHAINSAW</span><span className="t2">MAN</span></h1>
+      <div className="hero-artwork" data-hero-art><CharacterArtwork name="Chainsaw Man" src={characters[0].artwork} priority sizes="(max-width: 760px) 90vw, 58vw" /></div>
+      <div className="hero-slash" aria-hidden="true" />
+      <div className="hero-tagline">
+        <p className="hero-tagline-main d">
+          <span className="word"><span>DEVILS.{" "}</span></span>
+          <span className="word"><span>HUNTERS.{" "}</span></span>
+          <span className="word"><span>CONTRACTS.</span></span>
+        </p>
+        <p className="hero-tagline-sub">Every story leaves a mark.</p>
       </div>
-      <div className="hero-footer"><span>チェンソーマン</span><span>SCROLL TO EXPLORE ↓</span></div>
+      <span className="hero-scroll" aria-hidden="true">SCROLL TO EXPLORE<span /></span>
     </section>
 
-    <div className="mq" aria-hidden="true"><div>DEVIL HUNTERS ★ CONTRACTS ★ BLOOD ★ HELL ★ CHAINSAW ★ DEVIL HUNTERS ★ CONTRACTS ★ BLOOD ★ HELL ★ CHAINSAW ★ </div></div>
+    <div className="mq" aria-hidden="true"><div className="mq-track"><span>{tickerText}</span><span>{tickerText}</span></div></div>
 
     <section className="part p1">
       <div className="part-inner">
@@ -70,7 +66,7 @@ export default function HomePage() {
           <div className="end-copy" data-home-reveal>
             <p>Follow the hunters, devils, places, and volumes that shape the story.</p>
             <TransitionLink className="btn" href="/characters">ENTER THE ARCHIVE <span aria-hidden="true">↗</span></TransitionLink>
-            <small>CHARACTERS · DEVILS · ARCS · LOCATIONS · VOLUMES</small>
+              <small>CHARACTERS · CLASSIFIED FILES · ARCS · LOCATIONS · VOLUMES</small>
           </div>
         </div>
         <figure className="end-artwork" data-home-art>

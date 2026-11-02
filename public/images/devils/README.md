@@ -1,0 +1,1 @@
+Place authorized PNG, WebP, AVIF, or JPG devil and fiend artwork here. Set each record's optional artwork field in src/data/devils.ts to its /images/devils/<filename> path. Records without an image show the designed dossier fallback.

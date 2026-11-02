@@ -4,6 +4,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-001",
     "name": "Chainsaw Devil",
+    "type": "devil",
     "japanese": "チェンソーの悪魔",
     "contractor": "Pochita",
     "threat": "S",
@@ -12,6 +13,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-002",
     "name": "Blood Fiend",
+    "type": "fiend",
     "japanese": "血の魔人",
     "contractor": "Power",
     "threat": "B",
@@ -20,6 +22,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-003",
     "name": "Gun Devil",
+    "type": "devil",
     "japanese": "銃の悪魔",
     "contractor": "Public Safety target",
     "threat": "S",
@@ -28,6 +31,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-004",
     "name": "Control Devil",
+    "type": "devil",
     "japanese": "支配の悪魔",
     "contractor": "Makima",
     "threat": "S",
@@ -36,6 +40,8 @@ export const devils: Devil[] = [
   {
     "id": "CM-005",
     "name": "Darkness Devil",
+    "type": "devil",
+    "subcategory": "Primal Fear",
     "japanese": "暗闇の悪魔",
     "contractor": "Hell’s Primal Fears",
     "threat": "A",
@@ -44,6 +50,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-006",
     "name": "Falling Devil",
+    "type": "devil",
     "japanese": "落下の悪魔",
     "contractor": "Part 2 files",
     "threat": "A",
@@ -53,6 +60,8 @@ export const devils: Devil[] = [
   {
     "id": "CM-007",
     "name": "War Devil",
+    "type": "devil",
+    "subcategory": "Horseman",
     "japanese": "戦争の悪魔",
     "contractor": "Yoru / Asa",
     "threat": "S",
@@ -61,6 +70,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-008",
     "name": "Future Devil",
+    "type": "devil",
     "japanese": "未来の悪魔",
     "contractor": "Aki Hayakawa",
     "threat": "B",
@@ -69,6 +79,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-009",
     "name": "Fox Devil",
+    "type": "devil",
     "japanese": "狐の悪魔",
     "contractor": "Aki Hayakawa",
     "threat": "C",
@@ -77,6 +88,7 @@ export const devils: Devil[] = [
   {
     "id": "CM-010",
     "name": "Curse Devil",
+    "type": "devil",
     "japanese": "呪いの悪魔",
     "contractor": "Aki Hayakawa",
     "threat": "A",

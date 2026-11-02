@@ -14,8 +14,8 @@ export function usePanelMotion(root: RefObject<HTMLElement | null>, kind: "chara
           .fromTo("[data-character-title]", { y: 35, opacity: 0 }, { y: 0, opacity: 1, duration: .65 }, .15)
           .fromTo("[data-character-copy]", { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: .07, duration: .55 }, .25);
       } else if (kind === "devil") {
-        timeline.fromTo(root.current, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: .8, ease: "power4.inOut", clearProps: "clipPath" })
-          .fromTo("h3,.jp,dl,p", { y: 40, opacity: 0 }, { y: 0, opacity: 1, stagger: .08, duration: .8 }, .3);
+        timeline.fromTo("[data-devil-art]", { clipPath: "inset(0 100% 0 0)", opacity: .5 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: .65, ease: "power4.inOut", clearProps: "clipPath,opacity" })
+          .fromTo("[data-devil-copy]", { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: .045, duration: .5, clearProps: "transform,opacity" }, .1);
       } else if (kind === "arc") {
         timeline.fromTo("[data-arc-art]", { clipPath: "inset(0 100% 0 0)", opacity: .4 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: .85, ease: "power4.inOut" }, 0)
           .fromTo("[data-arc-title]", { y: 38, opacity: 0 }, { y: 0, opacity: 1, duration: .7 }, .12)

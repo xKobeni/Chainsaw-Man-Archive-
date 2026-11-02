@@ -85,7 +85,7 @@ export function ArcsExplorer() {
               const id = characterAliases[name] ?? characters.find((item) => item.name === name)?.id;
               return <span key={name}>{index > 0 && <span className={styles.separator}> / </span>}{id ? <CharacterLink id={id}>{name}<ArrowUpRight size={13} aria-hidden="true" /></CharacterLink> : name}</span>;
             })}</p></div>
-            <div><h3>ANTAGONIST</h3><p>{devilIndex >= 0 ? <TransitionLink href="/devils" onClick={() => setDevil(devilIndex)}>{selected.antagonist}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : selected.antagonist}</p></div>
+            <div><h3>ANTAGONIST</h3><p>{devilIndex >= 0 ? <TransitionLink href="/classified-files" onClick={() => setDevil(devilIndex)}>{selected.antagonist}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : selected.antagonist}</p></div>
             <div><h3>KEY LOCATIONS</h3><p>{keyLocations.map((name, index) => <span key={name}>{index > 0 && <span className={styles.separator}> / </span>}{knownLocations.includes(locationAliases[name] ?? name) ? <TransitionLink href="/locations">{name}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : name}</span>)}</p></div>
             <div><h3>RELATED VOLUMES</h3><p>{relatedVolumes.map((number, index) => <span key={number}>{index > 0 && <span className={styles.separator}> / </span>}<TransitionLink href="/volumes" onClick={() => setVolume(number)}>VOL. {String(number).padStart(2, "0")}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink></span>)}</p></div>
           </div>

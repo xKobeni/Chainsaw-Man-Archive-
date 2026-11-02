@@ -7,6 +7,7 @@ import { connections } from "../src/data/lore.ts";
 import { arcs } from "../src/data/arcs.ts";
 import { volumes } from "../src/data/volumes.ts";
 import { navigation } from "../src/data/navigation.ts";
+import { devils } from "../src/data/devils.ts";
 import { arcsForVolume } from "../src/lib/archive.ts";
 
 test("character relationships, locations and lore resolve to existing records", () => {
@@ -27,6 +28,19 @@ test("artwork references exist and use raster extensions", () => {
     if (!character.artwork) continue;
     assert.match(character.artwork, /^\/images\/.+\.(png|webp|avif|jpe?g)$/i);
     assert.ok(existsSync(`public${character.artwork}`));
+  }
+});
+
+test("classified records have explicit types and local artwork paths", () => {
+  assert.equal(new Set(devils.map((file) => file.id)).size, devils.length);
+  assert.equal(devils.find((file) => file.id === "CM-002")?.type, "fiend");
+  assert.equal(devils.find((file) => file.id === "CM-005")?.subcategory, "Primal Fear");
+  assert.equal(devils.find((file) => file.id === "CM-007")?.subcategory, "Horseman");
+  for (const file of devils) {
+    assert.ok(file.type === "devil" || file.type === "fiend");
+    if (!file.artwork) continue;
+    assert.match(file.artwork, /^\/images\/devils\/.+\.(png|webp|avif|jpe?g)$/i);
+    assert.ok(existsSync("public" + file.artwork));
   }
 });
 

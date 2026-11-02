@@ -14,8 +14,8 @@ export const navigation: NavigationItem[] = [
     "color": "#E48B36"
   },
   {
-    "href": "/devils",
-    "label": "DEVILS & FIENDS",
+    "href": "/classified-files",
+    "label": "CLASSIFIED FILES",
     "japanese": "悪魔",
     "color": "#76736F"
   },
