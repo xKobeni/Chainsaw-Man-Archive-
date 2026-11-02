@@ -1,0 +1,31 @@
+@media (hover: hover) and (pointer: fine) {
+  * {
+    scrollbar-color: var(--r) #171717;
+    scrollbar-width: thin;
+  }
+
+  @supports selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-color: auto;
+      scrollbar-width: auto;
+    }
+
+    ::-webkit-scrollbar {
+      width: 9px;
+      height: 9px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #171717;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--r);
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E13B38;
+    }
+  }
+}

@@ -7,7 +7,7 @@
 .parts span { color: var(--g); font-size: 9px; }
 .parts button:hover,.parts button:focus-visible,.parts .activePart { background: var(--w); color: var(--k); border-color: var(--w); }
 .parts .activePart span { color: #555; }
-.rail { display: flex; gap: 1px; width: 100%; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--r) #252525; scroll-snap-type: x proximity; border-top: 1px solid #3d3b39; border-bottom: 1px solid #3d3b39; }
+.rail { display: flex; gap: 1px; width: 100%; overflow-x: auto; scroll-snap-type: x proximity; border-top: 1px solid #3d3b39; border-bottom: 1px solid #3d3b39; }
 .rail button { flex: 0 0 auto; display: flex; align-items: baseline; gap: 11px; min-width: 150px; max-width: 250px; min-height: 65px; padding: 18px 18px 14px; text-align: left; border-bottom: 3px solid transparent; scroll-snap-align: start; color: var(--w); transition: color .2s, border-color .2s, background .2s; }
 .rail button:hover,.rail button:focus-visible { background: #292727; }
 .rail .activeTab { border-color: var(--c); background: #242020; }

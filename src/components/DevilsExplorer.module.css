@@ -77,8 +77,6 @@
   max-height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-color: var(--r) #282321;
-  scrollbar-width: thin;
 }
 .list button {
   display: grid;

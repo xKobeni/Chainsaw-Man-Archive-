@@ -8,7 +8,7 @@
 .parts button:hover,.parts button:focus-visible,.parts .activePart { background: var(--w); color: var(--k); border-color: var(--w); }
 .parts .activePart small { color: #555; }
 .layout { display: grid; grid-template-columns: minmax(225px,.27fr) minmax(0,1fr); gap: clamp(28px,3vw,54px); min-width: 0; }
-.selector { display: flex; flex-direction: column; align-self: start; max-height: 740px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--c) #222; border-top: 1px solid #4b4845; }
+.selector { display: flex; flex-direction: column; align-self: start; max-height: 740px; overflow-y: auto; border-top: 1px solid #4b4845; }
 .selector button { display: grid; grid-template-columns: 30px minmax(0,1fr); column-gap: 11px; align-items: baseline; width: 100%; min-height: 64px; padding: 12px 10px 10px; text-align: left; border-bottom: 1px solid #484441; color: var(--w); transition: padding .2s, background .2s, color .2s; }
 .selector button>span { color: var(--c); font: 11px var(--m); }
 .selector strong { min-width: 0; font: clamp(18px,2.1vw,31px)/1.05 var(--d); text-transform: uppercase; font-weight: 400; overflow-wrap: normal; }

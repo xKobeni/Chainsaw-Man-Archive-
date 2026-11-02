@@ -22,7 +22,7 @@
 .controls button:disabled { opacity: .35; }
 .galleryHeading { margin-top: 46px; padding-bottom: 10px; border-bottom: 1px solid #585450; }
 .galleryHeading h3 { font: 32px/1 var(--d); letter-spacing: .04em; color: var(--w); }
-.gallery { display: flex; gap: clamp(12px, 2vw, 26px); overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; scroll-padding-inline: 2px; padding: 22px 2px 32px; scrollbar-color: var(--r) #2b2927; }
+.gallery { display: flex; gap: clamp(12px, 2vw, 26px); overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; scroll-padding-inline: 2px; padding: 22px 2px 32px; }
 .thumbnail { flex: 0 0 clamp(136px, 14vw, 182px); min-width: 0; text-align: left; scroll-snap-align: center; }
 .thumbnailCover { display: block; width: 100%; border: 2px solid transparent; transition: transform .32s ease, box-shadow .32s ease, border-color .32s ease; }
 .thumbnail:hover .thumbnailCover, .thumbnail:focus-visible .thumbnailCover { transform: translateY(-6px) scale(1.02); box-shadow: 9px 11px 0 #050505; }

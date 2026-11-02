@@ -10,7 +10,7 @@
 .navigation button:disabled { opacity: .35; cursor: not-allowed; }
 .progress { height: 3px; width: 100%; margin-top: 17px; background: #514b47; }
 .progress span { display: block; height: 100%; background: var(--r); transition: width .45s ease; }
-.gallery { display: flex; align-items: stretch; gap: clamp(12px, 1.5vw, 24px); width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 5vw; padding: 0 5vw 12px; scrollbar-width: thin; scrollbar-color: var(--r) #292524; }
+.gallery { display: flex; align-items: stretch; gap: clamp(12px, 1.5vw, 24px); width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 5vw; padding: 0 5vw 12px; }
 .panel { position: relative; isolation: isolate; flex: 0 0 min(86vw, 1400px); height: clamp(570px, 72svh, 790px); overflow: hidden; scroll-snap-align: start; display: grid; grid-template-rows: auto 1fr; padding: clamp(24px, 3vw, 48px); background: var(--c); color: var(--w); }
 .panel::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.18) 33%, rgba(0,0,0,.88) 100%); }
 .image { position: absolute; z-index: -2; inset: -12px; overflow: hidden; background: var(--c); }
