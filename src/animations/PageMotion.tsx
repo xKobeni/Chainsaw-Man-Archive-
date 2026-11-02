@@ -47,7 +47,6 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
           .fromTo(".hero .sun", { scale: .65, opacity: 0 }, { scale: 1, opacity: 1, duration: .85, clearProps: "opacity" }, 0)
           .fromTo(".hero .t1", { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: .78, clearProps: "transform,opacity" }, offset)
           .fromTo(".hero .t2", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: .78, clearProps: "transform,opacity" }, offset + .08)
-          .fromTo(".hero-artwork", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0 0 0 0)", duration: .95, clearProps: "clipPath" }, offset + .06)
           .fromTo(".hero-slash", { clipPath: "inset(0 100% 0 0)", opacity: 0 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: .75, clearProps: "clipPath,opacity" }, offset + .22)
           .fromTo(".hero-tagline-main .word span", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .1, duration: .6, clearProps: "transform,opacity" }, offset + .48)
           .fromTo(".hero-tagline-sub", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .55, clearProps: "transform,opacity" }, offset + .85)
@@ -64,20 +63,25 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
         select(".part,.end").forEach((section: HTMLElement) => {
           const lines = section.querySelectorAll("[data-home-line]");
           const reveal = section.querySelectorAll("[data-home-reveal]");
-          const art = section.querySelector("[data-home-art]");
           const revealTimeline = gsap.timeline({
+            paused: true,
             defaults: { ease: "power3.out" },
-            scrollTrigger: { trigger: section, start: "top 84%", once: true },
           });
-          if (art) revealTimeline.fromTo(art, { clipPath: section.classList.contains("p2") ? "inset(0 0 0 18%)" : "inset(12% 0 0 0)", y: 24, opacity: 0 }, {
-            clipPath: "inset(0 0 0 0)", y: 0, opacity: 1, duration: 1.05, clearProps: "clipPath,transform,opacity",
+          revealTimeline.fromTo(lines, { y: section.classList.contains("p2") ? -24 : 24, opacity: 0, clipPath: "inset(0 0 100% 0)" }, {
+            y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", stagger: .045, duration: .68, clearProps: "transform,opacity,clipPath",
           }, 0);
-          revealTimeline.fromTo(lines, { y: section.classList.contains("p2") ? -28 : 28, opacity: 0, clipPath: "inset(0 0 100% 0)" }, {
-            y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", stagger: .1, duration: .9, clearProps: "transform,opacity,clipPath",
-          }, .12);
-          revealTimeline.fromTo(reveal, { y: 26, opacity: 0 }, {
-            y: 0, opacity: 1, stagger: .08, duration: .75, clearProps: "transform,opacity",
-          }, .34);
+          revealTimeline.fromTo(reveal, { y: 16, opacity: 0 }, {
+            y: 0, opacity: 1, stagger: .035, duration: .58, clearProps: "transform,opacity",
+          }, .08);
+          ScrollTrigger.create({
+            trigger: section,
+            start: "top 88%",
+            once: true,
+            onEnter: (self) => {
+              if (Math.abs(self.getVelocity()) > 1500) revealTimeline.progress(1);
+              else revealTimeline.play();
+            },
+          });
         });
       }
       ScrollTrigger.refresh();

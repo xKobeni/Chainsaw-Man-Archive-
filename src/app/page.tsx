@@ -11,7 +11,7 @@ export default function HomePage() {
     <section className="hero" id="hero">
       <div className="sun" aria-hidden="true" />
       <h1 className="d"><span className="t1">CHAINSAW</span><span className="t2">MAN</span></h1>
-      <div className="hero-artwork" data-hero-art><CharacterArtwork name="Chainsaw Man" src={characters[0].artwork} priority sizes="(max-width: 760px) 90vw, 58vw" /></div>
+      <div className="hero-artwork" data-hero-art><CharacterArtwork name="Chainsaw Man" src={characters[0].artwork} priority fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 58vw" /></div>
       <div className="hero-slash" aria-hidden="true" />
       <div className="hero-tagline">
         <p className="hero-tagline-main d">
@@ -29,7 +29,7 @@ export default function HomePage() {
     <section className="part p1">
       <div className="part-inner">
         <figure className="part-artwork" data-home-art>
-          <CharacterArtwork name="Denji" src={characters[0].artwork} sizes="(max-width: 760px) 90vw, 38vw" />
+          <CharacterArtwork name="Denji" src={characters[0].artwork} fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
           <figcaption>FIG. 01 / DENJI</figcaption>
         </figure>
         <div className="part-copy">
@@ -52,7 +52,7 @@ export default function HomePage() {
           <span className="part-note" data-home-reveal>WAR DEVIL / FOUR HORSEMEN / 01</span>
         </div>
         <figure className="part-artwork" data-home-art>
-          <CharacterArtwork name="Asa Mitaka" src={characters.find((character) => character.id === "asa")!.artwork} sizes="(max-width: 760px) 90vw, 38vw" />
+          <CharacterArtwork name="Asa Mitaka" src={characters.find((character) => character.id === "asa")!.artwork} fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
           <figcaption>FIG. 02 / ASA MITAKA</figcaption>
         </figure>
       </div>
@@ -70,7 +70,7 @@ export default function HomePage() {
           </div>
         </div>
         <figure className="end-artwork" data-home-art>
-          <CharacterArtwork name="Chainsaw Man" src={characters[0].artwork} sizes="(max-width: 760px) 85vw, 33vw" />
+          <CharacterArtwork name="Chainsaw Man" src={characters[0].artwork} fadeIn immediateFallback sizes="(max-width: 760px) 85vw, 33vw" />
           <figcaption>THE STORY CONTINUES / 00</figcaption>
         </figure>
       </div>

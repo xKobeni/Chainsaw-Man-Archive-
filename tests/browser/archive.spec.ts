@@ -19,7 +19,8 @@ test("all routes, optimized raster assets and browser history work without runti
   const failedAssets: string[] = [];
   page.on("response", (response) => { if (response.url().startsWith("http://localhost:3000") && response.status() >= 400) failedAssets.push(response.url()); });
   await visit(page, "/");
-  await expect(page.locator(".hero img")).toBeVisible();
+  await expect(page.locator(".hero [data-artwork-placeholder]")).toBeVisible();
+  await expect(page.locator(".hero img")).toHaveCount(0);
   await expect(page.locator(".hero svg")).toHaveCount(0);
   await page.waitForFunction(() => [...document.images].every((image) => image.complete && image.naturalWidth > 0));
   for (const [label, path] of [["CHARACTERS", "/characters"], ["CLASSIFIED FILES", "/classified-files"], ["STORY ARCS", "/arcs"], ["WORLD & LOCATIONS", "/locations"], ["MANGA VOLUMES", "/volumes"], ["LORE & CONNECTIONS", "/lore"], ["HOME", "/"]]) {
@@ -298,7 +299,7 @@ test("home intro splits after loading and scroll sections settle visibly", async
   await expect(page.locator("header")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(page.locator("header")).toHaveCSS("color", "rgb(17, 17, 17)");
   await expect(page.locator(".wm b")).toHaveCSS("color", "rgb(207, 38, 45)");
-  await expect.poll(() => page.locator(".hero img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator(".hero [data-artwork-placeholder]")).toBeVisible();
   expect(await page.evaluate(() => sessionStorage.getItem("csm"))).toBe("1");
 
   for (const section of [".p1", ".p2", ".end"]) {
@@ -345,39 +346,98 @@ test("hollow cursor follows fine pointers without replacing the native cursor", 
   await expect(cursor).toBeHidden();
 });
 
-test("splash waits for hero artwork and releases after a stalled request", async ({ browser }) => {
-  const delayed = await browser.newPage();
-  let imageRequests = 0;
-  await delayed.route("**/_next/image?*", async (route) => {
-    imageRequests++;
-    await new Promise((resolve) => setTimeout(resolve, 2500));
-    await route.continue();
-  });
-  await delayed.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
-  await delayed.waitForTimeout(700);
-  expect(imageRequests).toBeGreaterThan(0);
-  await expect(delayed.locator("html")).not.toHaveAttribute("data-csm-reveal", "1");
-  await delayed.mouse.wheel(0, 600);
-  await expect.poll(() => delayed.evaluate(() => scrollY)).toBe(0);
-  await expect(delayed.locator("#ld")).toBeHidden({ timeout: 8000 });
-  await delayed.close();
+test("cursor theme follows section surfaces, artwork and menu overlays", async ({ page }) => {
+  await visit(page, "/");
+  const cursor = page.locator("#custom-cursor");
+  await page.mouse.move(700, 40);
+  await expect(cursor).toHaveAttribute("data-theme", "light");
+  await expect(cursor).toHaveCSS("color", "rgb(17, 17, 17)");
+  await page.locator(".p1").scrollIntoViewIfNeeded();
+  await expect(cursor).toHaveAttribute("data-theme", "dark");
+  await expect(cursor).toHaveCSS("color", "rgb(207, 38, 45)");
+  const artwork = await page.locator(".p1 .part-artwork").boundingBox();
+  await page.mouse.move(artwork!.x + 80, artwork!.y + 90);
+  await expect(cursor).toHaveAttribute("data-theme", "dark");
+  await page.locator(".p1 .btn").hover();
+  await expect(cursor).toHaveAttribute("data-theme", "warm");
+  await expect(cursor.locator("span")).toHaveCSS("width", "68px");
+  await page.mouse.move(680, 420);
+  await page.mouse.down();
+  await expect(cursor).toHaveAttribute("data-pressed", "true");
+  await page.mouse.up();
+  await expect(cursor).toHaveAttribute("data-pressed", "false");
+  await page.locator(".p2").scrollIntoViewIfNeeded();
+  await page.mouse.move(680, 420);
+  await expect(cursor).toHaveAttribute("data-theme", "warm");
+  await page.locator(".end").scrollIntoViewIfNeeded();
+  await page.mouse.move(700, 450);
+  await expect(cursor).toHaveAttribute("data-theme", "light");
+  await page.getByRole("button", { name: "MENU", exact: true }).click();
+  await page.mouse.move(400, 300);
+  await expect(cursor).toHaveAttribute("data-theme", "dark");
+  await page.locator("#ml a").first().hover();
+  await page.mouse.move(1100, 400);
+  await expect(cursor).toHaveAttribute("data-theme", "warm");
+});
 
-  const stalled = await browser.newPage();
+test("cursor yields to text inputs and touch pointers", async ({ page, browser }) => {
+  await visit(page, "/classified-files");
+  const cursor = page.locator("#custom-cursor");
+  const search = page.getByRole("searchbox");
+  await search.hover();
+  await expect(cursor).toHaveAttribute("data-visible", "false");
+  await expect(search).toHaveCSS("cursor", "text");
+  const touch = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  try {
+    const mobile = await touch.newPage();
+    await visit(mobile, "/");
+    await expect(mobile.locator("#custom-cursor")).toBeHidden();
+  } finally {
+    await touch.close();
+  }
+});
+
+test("splash reveals the immediate fallback despite a stalled texture", async ({ browser }) => {
+  const page = await browser.newPage();
   let releaseImage = () => {};
   const heldImage = new Promise<void>((resolve) => { releaseImage = resolve; });
-  await stalled.route("**/_next/image?*", async (route) => {
+  await page.route("**/images/placeholders/artwork.png", async (route) => {
     await heldImage;
     await route.continue().catch(() => {});
   });
   const started = Date.now();
   try {
-    await stalled.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
-    await expect(stalled.locator("#ld")).toBeHidden({ timeout: 9000 });
-    expect(Date.now() - started).toBeGreaterThan(4500);
+    await page.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
+    await expect(page.locator(".hero [data-artwork-placeholder]")).toBeVisible();
+    await expect(page.locator("#ld")).toBeHidden({ timeout: 7000 });
+    expect(Date.now() - started).toBeLessThan(6500);
+    await expect(page.locator(".p1 .part-artwork")).toHaveCSS("opacity", "1");
   } finally {
     releaseImage();
-    await stalled.close();
+    await page.close();
   }
+});
+
+test("home artwork frames stay visible through fast scroll and reduced motion", async ({ page }) => {
+  await visit(page, "/");
+  for (const section of [".p1", ".p2", ".end"]) {
+    const artwork = page.locator(section).locator("[data-home-art]");
+    await expect(artwork).toHaveCSS("opacity", "1");
+    await expect(artwork).toHaveCSS("clip-path", "none");
+    await page.locator(section).scrollIntoViewIfNeeded();
+    await expect(page.locator(section).locator("[data-home-reveal]").first()).toHaveCSS("opacity", "1");
+  }
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await expect(page.locator(".p1 [data-home-art]")).toHaveCSS("opacity", "1");
+  for (const section of [".p1", ".p2", ".end"]) {
+    await expect(page.locator(section).locator("[data-home-line]").first()).toHaveCSS("opacity", "1");
+    await expect(page.locator(section).locator("[data-home-reveal]").first()).toHaveCSS("opacity", "1");
+  }
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator("#ld")).toBeHidden();
+  await expect(page.locator(".end [data-home-art]")).toHaveCSS("opacity", "1");
+  await expect(page.locator(".end [data-home-reveal]").first()).toHaveCSS("opacity", "1");
 });
 
 test("desktop wheel scroll stays synced and mobile and reduced motion use native scrolling", async ({ page, browser }) => {

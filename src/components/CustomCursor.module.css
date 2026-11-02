@@ -1,6 +1,23 @@
-.cursor { position: fixed; top: 0; left: 0; z-index: 92; width: 0; height: 0; opacity: 0; pointer-events: none; will-change: transform; }
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 92;
+  width: 0;
+  height: 0;
+  color: var(--r);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+  transition: color .18s ease, opacity .12s ease;
+}
 .cursor[data-visible="true"] { opacity: 1; }
-.ring { position: absolute; top: 0; left: 0; border-radius: 50%; transform: translate(-50%,-50%); }
-.ring { width: 26px; height: 26px; border: 1px solid #fff; mix-blend-mode: difference; transition: width .2s,height .2s; }
-.cursor[data-hover="true"] .ring { width: 38px; height: 38px; }
-@media (hover: none),(pointer: coarse),(prefers-reduced-motion: reduce) { .cursor { display: none; } }
+.cursor[data-theme="light"], .cursor[data-theme="warm"] { color: var(--k); }
+.ring, .dot { position: absolute; top: 0; left: 0; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.ring { width: 36px; height: 36px; border: 2px solid currentColor; transition: width .22s ease, height .22s ease, transform .14s ease; }
+.dot { width: 3px; height: 3px; background: currentColor; }
+.cursor[data-hover="true"] .ring { width: 68px; height: 68px; }
+.cursor[data-pressed="true"] .ring { transform: translate(-50%, -50%) scale(.82); }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+}

@@ -128,20 +128,18 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
         .to("#ld .ld-activity", { opacity: 0, duration: .15 }, splitAt + .001)
         .set("#ld", { display: "none" });
       intro.play();
-      const artwork = pathname === "/" ? root.current?.querySelector(".hero-artwork") : null;
-      const imageReady = artwork ? new Promise<void>((resolve) => {
-        const check = () => {
-          const image = artwork.querySelector<HTMLImageElement>("img");
-          if (image?.complete && image.naturalWidth > 0) {
-            stopImageWait();
-            image.decode().then(resolve, resolve);
-          }
+      const heroImage = pathname === "/" ? root.current?.querySelector<HTMLImageElement>(".hero-artwork img") : null;
+      const imageReady = heroImage ? new Promise<void>((resolve) => {
+        const done = () => { stopImageWait(); resolve(); };
+        heroImage.addEventListener("load", done);
+        heroImage.addEventListener("error", done);
+        stopImageWait = () => {
+          heroImage.removeEventListener("load", done);
+          heroImage.removeEventListener("error", done);
         };
-        artwork.addEventListener("load", check, true);
-        stopImageWait = () => artwork.removeEventListener("load", check, true);
-        check();
+        if (heroImage.complete) done();
       }) : Promise.resolve();
-      const fontsReady = Promise.all([document.fonts.ready, document.fonts.load("1em Anton"), document.fonts.load('1em "Space Mono"'), document.fonts.load('900 1em "Noto Serif JP"')]);
+      const fontsReady = Promise.all([document.fonts.load("1em Anton"), document.fonts.load('1em "Space Mono"')]);
       const release = () => {
         if (!active || assetsReady) return;
         assetsReady = true;
@@ -149,7 +147,7 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
         stopImageWait();
         intro.play();
       };
-      fallback = window.setTimeout(release, 5000);
+      fallback = window.setTimeout(release, 3000);
       Promise.all([fontsReady, imageReady]).then(release, release);
     }
     return () => { active = false; window.clearTimeout(fallback); stopImageWait(); loader?.removeEventListener("wheel", blockWheel); media.revert(); };
