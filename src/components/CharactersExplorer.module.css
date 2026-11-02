@@ -1,5 +1,5 @@
 .explorer { padding: 0 5vw 10vh; min-width: 0; }
-.selectorHead { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 19px 0 18px; border-top: 1px solid #585450; }
+.selectorHead { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 12px 0; border-top: 1px solid #585450; }
 .selectorHead>span,.spotlightHead,.japanese,.facts dt,.artwork figcaption { font: 11px/1.5 var(--m); letter-spacing: .15em; }
 .selectorHead>span { color: var(--o); }
 .parts { display: flex; gap: 6px; }

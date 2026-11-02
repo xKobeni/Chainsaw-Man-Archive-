@@ -1,5 +1,5 @@
 .explorer { padding: 0 5vw 8vh; min-width: 0; }
-.selectorHead { display: flex; align-items: end; justify-content: space-between; gap: 24px; border-top: 1px solid var(--g); padding: 19px 0 18px; }
+.selectorHead { display: flex; align-items: end; justify-content: space-between; gap: 24px; border-top: 1px solid var(--g); padding: 12px 0; }
 .eyebrow,.featureHead,.kicker,.facts span,.related h3,.tabNumber,.parts span { font: 11px/1.5 var(--m); letter-spacing: .15em; }
 .eyebrow { color: var(--o); }
 .parts { display: flex; gap: 6px; flex-wrap: wrap; }

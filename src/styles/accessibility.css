@@ -16,7 +16,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .profile-artwork { position: absolute; right: 7vw; top: 8vh; width: min(35vw, 350px); height: 60vh; }
 #pf .top>.j, #pf .top>h2, #pf .top>p { position: relative; z-index: 1; }
 .ad .l>p { position: relative; z-index: 1; }
-#ld { pointer-events: none; }
+#ld { pointer-events: auto; }
 #ld h1 { margin: 0; }
 .ph .jp, .emb { pointer-events: none; }
 @media (max-width: 760px) {
@@ -32,8 +32,6 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   .ad .r { margin-top: 28px; padding-left: 20px; }
   .fl { padding: 24px; }
   .fl dl { grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: 8px; }
-  .loc { min-height: 520px; padding: 24px; }
-  .loc:nth-child(even) { min-height: 450px; }
   .profile-artwork { top: 12vh; width: 55vw; height: 45vh; opacity: .75; }
   #pf .top h2 { overflow-wrap: anywhere; font-size: clamp(48px, 15vw, 100px); }
   .ph { padding-top: 130px; }
@@ -41,6 +39,6 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  html { scroll-behavior: auto; }
+  html { scroll-behavior: auto !important; }
   .rv { opacity: 1; transform: none; }
 }

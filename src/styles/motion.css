@@ -18,11 +18,6 @@ font-size:12px}
 position:relative;
 z-index:1}
 
-.loc svg{
-left:-10%;
-width:120%;
-opacity:.5}
-
 #pf .top h2{
 overflow:hidden;
 padding:.06em 0}
@@ -69,8 +64,6 @@ margin-right:0}
 margin-left:0}
 .ph h1 span{
 margin-left:6vw}
-.loc,.loc:nth-child(n){
-flex-basis:88vw}
 .emb{
 width:90vw}
 .ph .jp{

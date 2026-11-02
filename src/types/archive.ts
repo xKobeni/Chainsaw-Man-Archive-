@@ -38,6 +38,7 @@ export interface ArchiveLocation {
   description: string;
   color: string;
   characters: string[];
+  image?: string | null;
 }
 export interface LoreConnection {
   from: string;

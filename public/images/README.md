@@ -24,4 +24,6 @@ Supply authorized PNG, WebP, AVIF or JPG artwork at these recommended paths, the
 
 Example public URL: `/images/characters/denji.webp`. Prefer transparent 4:7 artwork, approximately 800×1400 or larger. Do not set paths until files exist; `null` intentionally selects the shared placeholder. Runtime image failures also fall back to it.
 
-`backgrounds/` is reserved for authorized future background imagery. Current location scenery and radial emblems are decorative SVGs, not character illustrations. See the [volume cover manifest](volumes/README.md) for the neutral raster fallback and authorized cover paths.
+`backgrounds/` is reserved for authorized future background imagery. See the [volume cover manifest](volumes/README.md) for the neutral raster fallback and authorized cover paths.
+
+The World & Places gallery uses the neutral raster placeholder until licensed environment images are supplied. Add landscape PNG, WebP, AVIF or JPG files under `public/images/backgrounds/` (for example `tokyo.webp`, `public-safety-hq.webp`, `denjis-home.webp`, `hotel.webp`, `hell.webp`, and `academy.webp`) and set the matching location's `image` field in `src/data/locations.ts` to `/images/backgrounds/<file>`. The gallery does not use the prototype's SVG scenery.

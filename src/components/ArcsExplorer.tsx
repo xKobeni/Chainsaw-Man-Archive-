@@ -10,6 +10,7 @@ import { colorStyle } from "@/lib/archive";
 import { usePanelMotion } from "@/animations/usePanelMotion";
 import { motionQuery } from "@/animations/gsap";
 import { useArchive } from "./ArchiveShell";
+import { PageHeading } from "./PageHeading";
 import { CharacterLink } from "./CharacterLink";
 import { TransitionLink } from "./TransitionLink";
 import type { Part } from "@/types/archive";
@@ -51,12 +52,13 @@ export function ArcsExplorer() {
     : numbers.slice(0, 1);
   const devilIndex = devils.findIndex((item) => item.name === selected.antagonist);
 
-  return <div className={styles.explorer} style={colorStyle(selected.color === "#111111" ? "#F0EEE8" : selected.color)}>
+  return <><PageHeading title="Story" accent="Arcs" japanese="物語">
+    <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Story part">
+      {(["1", "2"] as const).map((value) => <button key={value} type="button" aria-pressed={part === value} className={part === value ? styles.activePart : ""} onClick={() => selectPart(value)}>PART {value}<span>{value === "1" ? "PUBLIC SAFETY" : "ACADEMY"}</span></button>)}
+    </div>
+  </PageHeading><div className={styles.explorer} style={colorStyle(selected.color === "#111111" ? "#F0EEE8" : selected.color)}>
     <div className={styles.selectorHead}>
       <span className={styles.eyebrow}>STORY INDEX / {String(arcs.length).padStart(2, "0")} FILES</span>
-      <div className={styles.parts} role="group" aria-label="Story part">
-        {(["1", "2"] as const).map((value) => <button key={value} type="button" aria-pressed={part === value} className={part === value ? styles.activePart : ""} onClick={() => selectPart(value)}>PART {value}<span>{value === "1" ? "PUBLIC SAFETY" : "ACADEMY"}</span></button>)}
-      </div>
     </div>
     <div id="at" className={styles.rail} role="tablist" aria-label={`Part ${part} story arcs`} ref={rail} onKeyDown={onKeyDown}>
       {visible.map(({ item, index }, position) => <button key={item.name} type="button" id={`arc-${index}`} data-arc={index} role="tab" aria-controls="arc-panel" aria-selected={arc === index} tabIndex={arc === index ? 0 : -1} className={arc === index ? styles.activeTab : ""} onClick={() => setArc(index)}>
@@ -90,5 +92,5 @@ export function ArcsExplorer() {
         </div>
       </div>
     </div>
-  </div>;
+  </div></>;
 }

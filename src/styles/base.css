@@ -19,6 +19,8 @@ html{
 background:var(--k);
 scroll-behavior:smooth}
 
+html.lenis{scroll-behavior:auto!important}
+
 body{
 background:var(--k);
 color:var(--w);

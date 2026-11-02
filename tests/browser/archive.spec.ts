@@ -203,26 +203,35 @@ test("home saga links select the intended part and repeated navigation cleans sc
   }
 });
 
-test("home intro plays once per session and scroll sections settle visibly", async ({ page }) => {
+test("home intro splits after loading and scroll sections settle visibly", async ({ page }) => {
   await page.addInitScript(() => {
     const gaps: number[] = [];
-    (window as Window & { __splitGaps?: number[] }).__splitGaps = gaps;
+    const entrances: { gap: number; title: number; cta: number }[] = [];
+    (window as Window & { __splitGaps?: number[]; __heroEntrances?: typeof entrances }).__splitGaps = gaps;
+    (window as Window & { __heroEntrances?: typeof entrances }).__heroEntrances = entrances;
     window.addEventListener("csm:reveal", () => {
       const record = () => {
         const top = document.querySelector(".ld-top");
         const bottom = document.querySelector(".ld-bottom");
         const loader = document.querySelector("#ld");
         if (!top || !bottom || !loader || getComputedStyle(loader).display === "none") return;
-        gaps.push(bottom.getBoundingClientRect().top - top.getBoundingClientRect().bottom);
+        const gap = bottom.getBoundingClientRect().top - top.getBoundingClientRect().bottom;
+        gaps.push(gap);
+        const title = document.querySelector(".hero .t1");
+        const cta = document.querySelector(".hero .go");
+        if (title && cta) entrances.push({ gap, title: Number(getComputedStyle(title).opacity), cta: Number(getComputedStyle(cta).opacity) });
         requestAnimationFrame(record);
       };
       requestAnimationFrame(record);
     }, { once: true });
   });
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  await expect(page.locator("#ld")).toBeHidden({ timeout: 5000 });
+  await expect(page.locator("#ld")).toBeHidden({ timeout: 8000 });
   const splitGaps = await page.evaluate(() => (window as Window & { __splitGaps?: number[] }).__splitGaps ?? []);
   expect(Math.max(...splitGaps)).toBeGreaterThan(100);
+  const entrances = await page.evaluate(() => (window as Window & { __heroEntrances?: { gap: number; title: number; cta: number }[] }).__heroEntrances ?? []);
+  expect(entrances.some(({ gap, title }) => gap > 100 && gap < 600 && title < .9)).toBe(true);
+  expect(entrances.some(({ gap, cta }) => gap > 600 && cta < .9)).toBe(true);
   await expect(page.locator(".hero h1")).toHaveText("CHAINSAWMAN");
   await expect(page.locator("header")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(page.locator("header")).toHaveCSS("color", "rgb(17, 17, 17)");
@@ -239,11 +248,96 @@ test("home intro plays once per session and scroll sections settle visibly", asy
   }
   await page.reload({ waitUntil: "domcontentloaded" });
   await expect(page.locator("html")).toHaveAttribute("data-csm-seen", "1");
-  await expect(page.locator("#ld")).toBeHidden({ timeout: 3000 });
+  await expect(page.locator("#ld")).toBeHidden({ timeout: 8000 });
+  const repeatEntrances = await page.evaluate(() => (window as Window & { __heroEntrances?: { gap: number; title: number }[] }).__heroEntrances ?? []);
+  expect(repeatEntrances.some(({ gap, title }) => gap > 100 && gap < 600 && title < .9)).toBe(true);
   await expect(page.locator(".hero .t1")).toHaveCSS("opacity", "1");
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
   const cta = await page.locator(".hero .go a").first().boundingBox();
   expect(cta).not.toBeNull();
   expect(cta!.x + cta!.width).toBeLessThanOrEqual(391);
+});
+
+test("splash waits for hero artwork and releases after a stalled request", async ({ browser }) => {
+  const delayed = await browser.newPage();
+  let imageRequests = 0;
+  await delayed.route("**/_next/image?*", async (route) => {
+    imageRequests++;
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+    await route.continue();
+  });
+  await delayed.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
+  await delayed.waitForTimeout(700);
+  expect(imageRequests).toBeGreaterThan(0);
+  await expect(delayed.locator("html")).not.toHaveAttribute("data-csm-reveal", "1");
+  await delayed.mouse.wheel(0, 600);
+  await expect.poll(() => delayed.evaluate(() => scrollY)).toBe(0);
+  await expect(delayed.locator("#ld")).toBeHidden({ timeout: 8000 });
+  await delayed.close();
+
+  const stalled = await browser.newPage();
+  let releaseImage = () => {};
+  const heldImage = new Promise<void>((resolve) => { releaseImage = resolve; });
+  await stalled.route("**/_next/image?*", async (route) => {
+    await heldImage;
+    await route.continue().catch(() => {});
+  });
+  const started = Date.now();
+  try {
+    await stalled.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
+    await expect(stalled.locator("#ld")).toBeHidden({ timeout: 9000 });
+    expect(Date.now() - started).toBeGreaterThan(4500);
+  } finally {
+    releaseImage();
+    await stalled.close();
+  }
+});
+
+test("desktop wheel scroll stays synced and mobile and reduced motion use native scrolling", async ({ page, browser }) => {
+  await visit(page, "/");
+  await expect(page.locator("html")).toHaveClass(/lenis/);
+  await page.mouse.wheel(0, 600);
+  await page.waitForTimeout(100);
+  const early = await page.evaluate(() => scrollY);
+  expect(early).toBeGreaterThan(0);
+  expect(early).toBeLessThan(600);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(550);
+  await page.locator(".p1").scrollIntoViewIfNeeded();
+  await page.evaluate(() => scrollBy({ top: 100, behavior: "instant" }));
+  await expect(page.locator("html")).toHaveAttribute("data-header-dark", "1");
+  await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
+  await page.getByRole("link", { name: "SKIP TO CONTENT" }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#main$/);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await page.goBack();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(500);
+  await menuNavigate(page, "CHARACTERS", "/characters");
+  await expect(page.locator("html")).not.toHaveClass(/lenis-stopped/);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await expect(page.locator("#ld")).toBeHidden();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator("html")).not.toHaveClass(/lenis/);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(page.locator("html")).toHaveClass(/lenis/);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator("html")).not.toHaveClass(/lenis/);
+  await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
+
+  const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, baseURL: "http://localhost:3000" });
+  try {
+    const touchPage = await mobile.newPage();
+    await visit(touchPage, "/");
+    await expect(touchPage.locator("html")).not.toHaveClass(/lenis/);
+    const touch = await mobile.newCDPSession(touchPage);
+    await touch.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 190, y: 650 }] });
+    for (const y of [600, 550, 500, 450, 400, 350, 300]) {
+      await touch.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: 190, y }] });
+    }
+    await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => touchPage.evaluate(() => scrollY)).toBeGreaterThan(100);
+  } finally {
+    await mobile.close();
+  }
 });

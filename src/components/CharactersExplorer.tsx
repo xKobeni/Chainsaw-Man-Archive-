@@ -34,11 +34,12 @@ export function CharactersExplorer() {
     button?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: matchMedia(motionQuery).matches ? "smooth" : "instant" });
   };
   return <>
-    <PageHeading title="The" accent="Cast" japanese="登場人物" />
+    <PageHeading title="The" accent="Cast" japanese="登場人物">
+      <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Story part">{(["1", "2"] as const).map((value) => <button key={value} type="button" className={part === value ? styles.activePart : ""} aria-pressed={part === value} onClick={() => selectPart(value)}>PART {value}<small>{value === "1" ? "PUBLIC SAFETY" : "ACADEMY"}</small></button>)}</div>
+    </PageHeading>
     <div className={styles.explorer} style={colorStyle(selected.color === "#111111" ? "#F0EEE8" : selected.color)}>
       <div className={styles.selectorHead}>
         <span>PERSONNEL INDEX / {String(visible.length).padStart(2, "0")} FILES</span>
-        <div className={styles.parts} role="group" aria-label="Story part">{(["1", "2"] as const).map((value) => <button key={value} type="button" className={part === value ? styles.activePart : ""} aria-pressed={part === value} onClick={() => selectPart(value)}>PART {value}<small>{value === "1" ? "PUBLIC SAFETY" : "ACADEMY"}</small></button>)}</div>
       </div>
       <div className={styles.layout}>
         <div id="cl" className={styles.selector} ref={rail} role="group" aria-label={`Part ${part} characters`} onKeyDown={onKeyDown}>

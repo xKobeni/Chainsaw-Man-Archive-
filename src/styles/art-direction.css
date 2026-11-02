@@ -134,34 +134,6 @@ border-left:3px solid var(--r);
 z-index:1;
 background:var(--k)}
 
-/* world: staggered, unequal plates with vertical place names */
-.hz{
-align-items:flex-start;
-gap:0;
-padding-bottom:6vh}
-
-.loc{
-border:0;
-clip-path:polygon(0 0,100% 4%,96% 100%,0 96%)}
-
-.loc:nth-child(even){
-margin-top:9vh;
-flex-basis:min(66vw,620px);
-height:62vh;
-clip-path:polygon(4% 0,100% 0,100% 94%,0 100%)}
-
-.loc:nth-child(3n){
-flex-basis:min(92vw,980px)}
-
-.loc>.j{
-position:absolute!important;
-right:2vw;
-top:2vh;
-writing-mode:vertical-rl;
-font-size:clamp(70px,13vw,200px)!important;
-opacity:.28;
-line-height:1}
-
 /* lore: contracts as stamped seals between oversized names */
 .lr div:nth-child(even){
 margin-left:10vw}

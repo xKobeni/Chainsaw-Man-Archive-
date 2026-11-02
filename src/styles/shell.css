@@ -3,7 +3,8 @@
 position:fixed;
 inset:0;
 z-index:100;
-overflow:hidden}
+overflow:hidden;
+touch-action:none}
 html[data-csm-seen="1"] #ld i { transform: scaleX(1); }
 html[data-csm-seen="1"] #ld .ld-word { opacity: 1; }
 html[data-csm-reduced="1"] #ld { display: none; }
@@ -37,8 +38,11 @@ justify-content:center;
 background:var(--k)}
 
 #ld .ld-top{top:0;align-items:flex-end}
-#ld .ld-bottom{bottom:0;align-items:flex-start}
+#ld .ld-bottom{bottom:0;flex-direction:column;align-items:center;justify-content:flex-start}
 #ld .ld-word{position:relative;z-index:2;display:block;opacity:0}
+#ld .ld-activity{display:block;width:min(130px,30vw);height:2px;margin-top:18px;overflow:hidden;background:rgba(207,38,45,.3)}
+#ld .ld-activity::after{content:"";display:block;width:38%;height:100%;background:var(--r);animation:ld-scan 1.2s ease-in-out infinite}
+@keyframes ld-scan{from{transform:translateX(-100%)}to{transform:translateX(365%)}}
 
 #wp{
 position:fixed;
