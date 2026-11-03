@@ -1,6 +1,6 @@
 # Arc artwork
 
-The 14 supplied JPG files are mapped in `src/data/arcs.ts` and rendered with `next/image` on the Arcs page. Wide images fill the existing panel; portrait images use `contain` to keep their subjects visible. The neutral placeholder remains available if a future arc has no artwork path.
+The 14 supplied JPG files are mapped in `src/data/arcs.ts` and rendered with `next/image` on the Arcs page. Every image fills its panel. Dating Denji, Falling Devil, and Gun Devil use subject-focused crops. The neutral placeholder remains available if a future arc has no artwork path.
 
 | Arc | File |
 | --- | --- |

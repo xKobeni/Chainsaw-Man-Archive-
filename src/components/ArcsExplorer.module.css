@@ -20,7 +20,9 @@
 .artwork::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,transparent 55%,rgba(0,0,0,.75)); pointer-events: none; }
 .artworkImage { object-fit: cover; object-position: center 48%; opacity: .82; }
 .artworkLoaded { opacity: 1; }
-.artworkContained { object-fit: contain; }
+.artwork[data-arc-art="Dating Denji"] .artworkImage { object-position: center 25%; }
+.artwork[data-arc-art="Falling Devil"] .artworkImage { object-position: center bottom; }
+.artwork[data-arc-art="Gun Devil"] .artworkImage { object-position: center top; }
 .artwork figcaption { position: absolute; z-index: 1; inset: auto 22px 20px; display: flex; align-items: end; justify-content: space-between; gap: 12px; }
 .artwork figcaption span { font: clamp(80px,12vw,180px)/.8 var(--d); color: var(--c); }
 .artwork figcaption small { font: 11px var(--m); letter-spacing: .12em; text-align: right; }

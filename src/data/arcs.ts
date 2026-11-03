@@ -64,7 +64,6 @@ export const arcs: StoryArc[] = [
     "description": "Denji meets Reze at a café and glimpses a life beyond Public Safety. Her hidden identity turns their romance into a deadly pursuit.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-6-0/product/6758",
     "artwork": "/images/arcs/reze_arc.jpg",
-    "artworkFit": "contain",
     "color": "#E48B36"
   },
   {
@@ -78,7 +77,6 @@ export const arcs: StoryArc[] = [
     "description": "Chainsaw Man's fame draws assassins from around the world to Tokyo. Public Safety's protection detail struggles to keep Denji out of their hands.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-7-0/product/6814",
     "artwork": "/images/arcs/international_arc.jpg",
-    "artworkFit": "contain",
     "color": "#76736F"
   },
   {
@@ -92,7 +90,6 @@ export const arcs: StoryArc[] = [
     "description": "As the confrontation with the Gun Devil approaches, Aki questions whether revenge is worth losing the family he has found with Denji and Power.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-9-0/product/6958",
     "artwork": "/images/arcs/gun_devil_arc.jpg",
-    "artworkFit": "contain",
     "color": "#CF262D"
   },
   {
@@ -106,7 +103,6 @@ export const arcs: StoryArc[] = [
     "description": "After devastating losses, Denji turns to Makima and discovers the truth behind her plans. Their final confrontation closes the Public Safety Saga.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-11-0/product/7081",
     "artwork": "/images/arcs/control_devil_arc.jpg",
-    "artworkFit": "contain",
     "color": "#111111"
   },
   {
@@ -120,7 +116,6 @@ export const arcs: StoryArc[] = [
     "description": "Asa Mitaka shares her body with Yoru and joins her school's Devil Hunter Club. Her new friendship with Yuko complicates their search for Chainsaw Man.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-13-0/product/7685",
     "artwork": "/images/arcs/justice_devil_arc.jpg",
-    "artworkFit": "contain",
     "color": "#E48B36"
   },
   {
@@ -134,7 +129,6 @@ export const arcs: StoryArc[] = [
     "description": "Asa and Denji go on a date at the aquarium while Yoru hopes to turn him into a weapon. A devil attack traps them together and upends the plan.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-14-0/product/7732",
     "artwork": "/images/arcs/dating_denji_arc.jpg",
-    "artworkFit": "contain",
     "color": "#76736F"
   },
   {
@@ -148,7 +142,6 @@ export const arcs: StoryArc[] = [
     "description": "The Falling Devil turns the city upside down and targets Asa. She and Yoru must work together to survive as Denji rushes to help.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-15-0/product/7838",
     "artwork": "/images/arcs/falling_devil_arc.jpg",
-    "artworkFit": "contain",
     "color": "#CF262D"
   },
   {
@@ -162,7 +155,6 @@ export const arcs: StoryArc[] = [
     "description": "As the Chainsaw Man Church gains influence, Denji is torn between a normal life and becoming Chainsaw Man again. The group's hidden plan threatens him and Asa.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-16-0/product/7984",
     "artwork": "/images/arcs/church_arc.jpg",
-    "artworkFit": "contain",
     "color": "#E48B36"
   },
   {
@@ -176,7 +168,6 @@ export const arcs: StoryArc[] = [
     "description": "After Denji's losses, Public Safety closes in on Chainsaw Man. The Aging Devil draws Denji and Asa into a world they must find a way to escape.",
     "sourceUrl": "https://www.viz.com/manga-books/manga/chainsaw-man-volume-21-0/product/8857",
     "artwork": "/images/arcs/aging_arc.jpg",
-    "artworkFit": "contain",
     "color": "#76736F"
   },
   {
@@ -190,7 +181,6 @@ export const arcs: StoryArc[] = [
     "description": "The Death Devil's arrival draws Denji into a widening conflict with Yoru. As War's power grows, Chainsaw Man must decide whom he is fighting for.",
     "sourceUrl": "https://books.shueisha.co.jp/items/contents.html?jdcn=08X10000000069270800",
     "artwork": "/images/arcs/war_devil_arc.jpg",
-    "artworkFit": "contain",
     "color": "#CF262D"
   }
 ];

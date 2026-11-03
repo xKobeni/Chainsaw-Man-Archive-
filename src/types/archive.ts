@@ -35,7 +35,6 @@ export interface StoryArc {
   description: string;
   sourceUrl: string;
   artwork?: string;
-  artworkFit?: "cover" | "contain";
   color: string;
 }
 export interface ArchiveLocation {

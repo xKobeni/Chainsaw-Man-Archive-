@@ -68,8 +68,8 @@ export function ArcsExplorer() {
     <div id="arc-panel" className={styles.feature} role="tabpanel" aria-labelledby={`arc-${arc}`} ref={root}>
       <div className={styles.featureHead}><span>FILE {String(arc + 1).padStart(2, "0")} / {String(arcs.length).padStart(2, "0")}</span><span>PART {part} · {selected.volumes.toUpperCase()}</span></div>
       <div className={styles.layout}>
-        <figure className={styles.artwork} data-arc-art>
-          <Image src={selected.artwork ?? "/images/placeholders/artwork.png"} alt={selected.artwork ? `${selected.name} arc artwork` : `${selected.name} arc artwork pending`} fill sizes="(max-width: 760px) 90vw, 48vw" priority loading="eager" className={`${styles.artworkImage} ${selected.artwork ? styles.artworkLoaded : ""} ${selected.artworkFit === "contain" ? styles.artworkContained : ""}`} />
+        <figure className={styles.artwork} data-arc-art={selected.name}>
+          <Image src={selected.artwork ?? "/images/placeholders/artwork.png"} alt={selected.artwork ? `${selected.name} arc artwork` : `${selected.name} arc artwork pending`} fill sizes="(max-width: 760px) 90vw, 48vw" priority loading="eager" className={`${styles.artworkImage} ${selected.artwork ? styles.artworkLoaded : ""}`} />
           <figcaption><span>{String(arc + 1).padStart(2, "0")}</span><small>{selected.artwork ? selected.name.toUpperCase() : "ARC ARTWORK PENDING"}</small></figcaption>
         </figure>
         <div className={styles.story}>
