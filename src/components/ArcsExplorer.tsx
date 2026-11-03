@@ -69,15 +69,16 @@ export function ArcsExplorer() {
       <div className={styles.featureHead}><span>FILE {String(arc + 1).padStart(2, "0")} / {String(arcs.length).padStart(2, "0")}</span><span>PART {part} · {selected.volumes.toUpperCase()}</span></div>
       <div className={styles.layout}>
         <figure className={styles.artwork} data-arc-art>
-          <Image src="/images/placeholders/artwork.png" alt="Arc illustration pending" fill sizes="(max-width: 760px) 90vw, 48vw" priority loading="eager" className={styles.artworkImage} />
-          <figcaption><span>{String(arc + 1).padStart(2, "0")}</span><small>ARC ARTWORK PENDING</small></figcaption>
+          <Image src={selected.artwork ?? "/images/placeholders/artwork.png"} alt={selected.artwork ? `${selected.name} arc artwork` : `${selected.name} arc artwork pending`} fill sizes="(max-width: 760px) 90vw, 48vw" priority loading="eager" className={`${styles.artworkImage} ${selected.artwork ? styles.artworkLoaded : ""} ${selected.artworkFit === "contain" ? styles.artworkContained : ""}`} />
+          <figcaption><span>{String(arc + 1).padStart(2, "0")}</span><small>{selected.artwork ? selected.name.toUpperCase() : "ARC ARTWORK PENDING"}</small></figcaption>
         </figure>
         <div className={styles.story}>
           <span className={styles.kicker} data-arc-copy>THE ARCHIVE / PART {part}</span>
           <h2 className={styles.title} data-arc-title>{selected.name}</h2>
           <p className={styles.synopsis} data-arc-copy>{selected.description}</p>
+          <a className={styles.source} data-arc-copy href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">PUBLISHER VOLUME <ArrowUpRight size={13} aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span></a>
           <div className={styles.facts} data-arc-copy>
-            <div><span>CHAPTER RANGE</span><strong>Not verified</strong></div>
+            <div><span>CHAPTER RANGE</span><strong>{selected.chapters}</strong></div>
             <div><span>MANGA VOLUMES</span><strong>{selected.volumes}</strong></div>
           </div>
           <div className={styles.related} data-arc-copy>
@@ -85,7 +86,7 @@ export function ArcsExplorer() {
               const id = characterAliases[name] ?? characters.find((item) => item.name === name)?.id;
               return <span key={name}>{index > 0 && <span className={styles.separator}> / </span>}{id ? <CharacterLink id={id}>{name}<ArrowUpRight size={13} aria-hidden="true" /></CharacterLink> : name}</span>;
             })}</p></div>
-            <div><h3>ANTAGONIST</h3><p>{devilIndex >= 0 ? <TransitionLink href="/classified-files" onClick={() => setDevil(devilIndex)}>{selected.antagonist}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : selected.antagonist}</p></div>
+            <div><h3>KEY THREAT</h3><p>{devilIndex >= 0 ? <TransitionLink href="/classified-files" onClick={() => setDevil(devilIndex)}>{selected.antagonist}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : selected.antagonist}</p></div>
             <div><h3>KEY LOCATIONS</h3><p>{keyLocations.map((name, index) => <span key={name}>{index > 0 && <span className={styles.separator}> / </span>}{knownLocations.includes(locationAliases[name] ?? name) ? <TransitionLink href="/locations">{name}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : name}</span>)}</p></div>
             <div><h3>RELATED VOLUMES</h3><p>{relatedVolumes.map((number, index) => <span key={number}>{index > 0 && <span className={styles.separator}> / </span>}<TransitionLink href="/volumes" onClick={() => setVolume(number)}>VOL. {String(number).padStart(2, "0")}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink></span>)}</p></div>
           </div>

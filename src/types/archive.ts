@@ -27,11 +27,15 @@ export interface Devil {
 export interface StoryArc {
   name: string;
   part: Part;
+  chapters: string;
   volumes: string;
   characters: string;
   antagonist: string;
   locations: string;
   description: string;
+  sourceUrl: string;
+  artwork?: string;
+  artworkFit?: "cover" | "contain";
   color: string;
 }
 export interface ArchiveLocation {

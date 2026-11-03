@@ -59,7 +59,7 @@ export function VolumesExplorer() {
           <div><dt>STORY</dt><dd>{relatedArcs.length ? relatedArcs.map((arc) => <TransitionLink key={arc.name} href="/arcs" className={styles.arcLink} onClick={() => setArc(arcs.indexOf(arc))}>{arc.name}</TransitionLink>) : "Arc mapping unavailable"}</dd></div>
           {selected.publishedInJapan && <div><dt>JAPAN PRINT RELEASE</dt><dd>{selected.sourceUrl ? <a className={styles.sourceLink} href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.publishedInJapan}<span className="sr-only"> (publisher source opens in new tab)</span></a> : selected.publishedInJapan}</dd></div>}
         </dl>
-        <p className={styles.context}>{selected.part === "1" ? "Public Safety Saga" : "Academy Saga"} · Related arc mapping follows the archive&apos;s story overview.</p>
+        <p className={styles.context}>{selected.part === "1" ? "Public Safety Saga" : "Academy Saga"} · Story arcs overlapping this volume&apos;s chapters.</p>
         <div className={styles.controls}>
           <button disabled={volume === 1} onClick={() => choose(volume - 1)} aria-label="Previous volume"><ArrowLeft size={18} aria-hidden="true" /> PREV</button>
           <button disabled={volume === volumes.length} onClick={() => choose(volume + 1)} aria-label="Next volume">NEXT <ArrowRight size={18} aria-hidden="true" /></button>
@@ -81,6 +81,6 @@ export function VolumesExplorer() {
         <span className={styles.thumbnailMeta}><b>{String(item.number).padStart(2, "0")}</b><span>PART {item.part}</span></span>
       </button>)}
     </div>
-    <p className={styles.footnote}>Cover images are pending authorized artwork. Chapter ranges without a verified source remain blank; arc spans follow the archive&apos;s approximate story overview.</p>
+    <p className={styles.footnote}>Chapter and arc ranges follow the published volume contents and Chainsaw Man Wiki&apos;s story index.</p>
   </div>;
 }

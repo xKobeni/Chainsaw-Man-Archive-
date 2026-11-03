@@ -96,14 +96,15 @@ test("dossiers, arc keyboard navigation, location links, volume bounds and lore 
   await page.keyboard.press("End");
   await expect(page.getByRole("tab", { name: /Control Devil/ })).toHaveAttribute("aria-selected", "true");
   await page.getByRole("button", { name: /^PART 2/ }).click();
-  await page.getByRole("tab", { name: /Academy Saga/ }).focus();
+  await page.getByRole("tab", { name: /Justice Devil/ }).focus();
   await page.keyboard.press("End");
-  await expect(page.getByRole("tab", { name: /War Devil Arc/ })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("tab", { name: /War Devil/ })).toHaveAttribute("aria-selected", "true");
   await expect(page.getByRole("tabpanel")).not.toContainText("undefined");
   await page.getByRole("button", { name: /^PART 1/ }).click();
   await page.getByRole("tab", { name: /Introduction/ }).focus();
   await page.keyboard.press("Home");
-  await expect(page.getByRole("tabpanel")).toContainText("Denji’s debt, the loss of Pochita, and Makima’s offer.");
+  await expect(page.getByRole("tabpanel")).toContainText("Their pact gives Denji a new life as Chainsaw Man");
+  await expect(page.getByRole("link", { name: /PUBLISHER VOLUME/ })).toHaveAttribute("href", /viz\.com\/manga-books\/manga\/chainsaw-man-volume-1/);
   await menuNavigate(page, "WORLD & LOCATIONS", "/locations");
   await page.locator(".loc").last().getByRole("link", { name: "Asa Mitaka" }).click();
   await expect(page).toHaveURL(/\/characters$/);
@@ -174,17 +175,27 @@ test("classified files filter, search, scroll and redirect", async ({ page }) =>
   await expect(page.locator("#df h3")).toHaveText("Blood Fiend");
 });
 
-test("volume gallery shows raster fallbacks, supports arrow keys and links to an arc", async ({ page }) => {
+test("volume gallery loads covers, supports arrow keys and links to an arc", async ({ page }) => {
   await visit(page, "/volumes");
-  await expect(page.locator("#vf img")).toHaveAttribute("alt", "Volume 1 cover artwork pending");
+  await expect(page.locator("#vf img")).toHaveAttribute("alt", "Chainsaw Man volume 1 cover");
   await expect.poll(() => page.locator("#vf img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   await expect(page.locator("[data-volume-label]")).toHaveText("VOL. 01");
   await page.getByRole("button", { name: "Volume 1", exact: true }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByRole("button", { name: "Volume 2", exact: true })).toBeFocused();
   await expect(page.locator("[data-volume-label]")).toHaveText("VOL. 02");
+  await page.getByRole("button", { name: "Volume 5", exact: true }).click();
+  await expect(page.locator("#vf")).toContainText("35–43");
+  await expect(page.locator("#vf")).toContainText("Katana Man");
+  await expect(page.locator("#vf")).toContainText("Bomb Girl");
+  await page.getByRole("button", { name: "Volume 15", exact: true }).click();
+  await expect(page.locator("#vf")).toContainText("123–133");
+  await expect(page.locator("#vf")).toContainText("Falling Devil");
+  await expect(page.locator("#vf")).toContainText("Chainsaw Man Church");
   await page.keyboard.press("End");
   await expect(page.locator("[data-volume-label]")).toHaveText("VOL. 24");
+  await expect(page.locator("#vf img")).toHaveAttribute("alt", "Chainsaw Man volume 24 cover");
+  await expect.poll(() => page.locator("#vf img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   await expect(page.locator("#vf")).toContainText("223–232");
   await expect(page.locator("#vf")).toContainText("4 June 2026");
   await page.keyboard.press("Home");
@@ -197,6 +208,9 @@ test("volume gallery shows raster fallbacks, supports arrow keys and links to an
 test("editorial arc and character layouts keep long names contained and related links work", async ({ page }) => {
   await visit(page, "/arcs");
   await page.getByRole("tab", { name: /International Assassins/ }).click();
+  await expect(page.locator("#arc-panel img")).toHaveAttribute("alt", "International Assassins arc artwork");
+  await expect.poll(() => page.locator("#arc-panel img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator("#arc-panel img")).toHaveCSS("object-fit", "contain");
   for (const width of [1440, 820, 390]) {
     await page.setViewportSize({ width, height: 900 });
     const arcTitle = await page.locator("#arc-panel h2").evaluate((element) => ({

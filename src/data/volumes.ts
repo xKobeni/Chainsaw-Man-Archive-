@@ -1,21 +1,20 @@
 import type { Volume } from "../types/archive";
 
-// Explicit ranges replace the prototype's calculated approximation.
-// Volumes 1–11 follow the publisher's chapter groupings; 24 is from Shueisha.
-const verifiedChapters: Record<number, string> = {
-  1: "1–7", 2: "8–16", 3: "17–25", 4: "26–34", 5: "35–43",
-  6: "44–52", 7: "53–61", 8: "62–70", 9: "71–79",
-  10: "80–88", 11: "89–97", 24: "223–232",
-};
+const volumeChapters = [
+  "1–7", "8–16", "17–25", "26–34", "35–43", "44–52",
+  "53–61", "62–70", "71–79", "80–88", "89–97", "98–103",
+  "104–112", "113–122", "123–133", "134–143", "144–153", "154–164",
+  "165–175", "176–186", "187–198", "199–210", "211–222", "223–232",
+];
 
 export const volumes: Volume[] = Array.from({ length: 24 }, (_, index) => {
   const number = index + 1;
   return {
     number,
     part: number <= 11 ? "1" : "2",
-    chapters: verifiedChapters[number] ?? null,
+    chapters: volumeChapters[index],
     color: ["#CF262D", "#E48B36", "#76736F", "#F0EEE8"][index % 4],
-    cover: null,
+    cover: `/images/volumes/csm_volume_${number}.jpg`,
     ...(number === 1 ? {
       publishedInJapan: "4 March 2019",
       sourceUrl: "https://books.shueisha.co.jp/items/contents.html?jdcn=08881780881780315501",

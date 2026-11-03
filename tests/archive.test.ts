@@ -44,20 +44,40 @@ test("classified records have explicit types and local artwork paths", () => {
   }
 });
 
-test("volume and arc boundaries preserve the prototype content without undefined descriptions", () => {
+test("volume chapters and story arcs match the supplied covers", () => {
   assert.equal(volumes.length, 24);
-  assert.equal(volumes[10].chapters, "89–97");
+  assert.deepEqual(volumes.map((volume) => volume.chapters), [
+    "1–7", "8–16", "17–25", "26–34", "35–43", "44–52",
+    "53–61", "62–70", "71–79", "80–88", "89–97", "98–103",
+    "104–112", "113–122", "123–133", "134–143", "144–153", "154–164",
+    "165–175", "176–186", "187–198", "199–210", "211–222", "223–232",
+  ]);
   assert.equal(volumes[11].part, "2");
-  assert.equal(volumes[11].chapters, null);
-  assert.equal(volumes[23].chapters, "223–232");
   assert.ok(existsSync("public/images/placeholders/manga-cover.png"));
   for (const volume of volumes) {
-    if (!volume.cover) continue;
+    assert.equal(volume.cover, `/images/volumes/csm_volume_${volume.number}.jpg`);
     assert.match(volume.cover, /^\/images\/volumes\/.+\.(png|webp|avif|jpe?g)$/i);
     assert.ok(existsSync(`public${volume.cover}`));
   }
   assert.deepEqual(arcsForVolume(arcs, volumes[0]).map((arc) => arc.name), ["Introduction", "Bat Devil"]);
+  assert.deepEqual(arcsForVolume(arcs, volumes[4]).map((arc) => arc.name), ["Katana Man", "Bomb Girl"]);
+  assert.deepEqual(arcsForVolume(arcs, volumes[8]).map((arc) => arc.name), ["Gun Devil"]);
   assert.deepEqual(arcsForVolume(arcs, volumes[10]).map((arc) => arc.name), ["Control Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[11]).map((arc) => arc.name), ["Academy Saga"]);
-  assert.ok(arcs.every((arc) => arc.description && !arc.description.includes("undefined")));
+  assert.deepEqual(arcsForVolume(arcs, volumes[11]).map((arc) => arc.name), ["Justice Devil"]);
+  assert.deepEqual(arcsForVolume(arcs, volumes[14]).map((arc) => arc.name), ["Falling Devil", "Chainsaw Man Church"]);
+  assert.deepEqual(arcsForVolume(arcs, volumes[17]).map((arc) => arc.name), ["Chainsaw Man Church", "Aging Devil"]);
+  assert.deepEqual(arcsForVolume(arcs, volumes[20]).map((arc) => arc.name), ["Aging Devil", "War Devil"]);
+  assert.deepEqual(arcsForVolume(arcs, volumes[23]).map((arc) => arc.name), ["War Devil"]);
+  for (const arc of arcs) {
+    const [first, last = first] = arc.volumes.match(/\d+/g)?.map(Number) ?? [];
+    assert.deepEqual(volumes.filter((volume) => arcsForVolume([arc], volume).length).map((volume) => volume.number),
+      Array.from({ length: last - first + 1 }, (_, index) => first + index), arc.name);
+  }
+  assert.ok(arcs.every((arc) => arc.chapters && arc.description.length > 70 && !arc.description.includes("undefined")));
+  assert.ok(arcs.every((arc) => /^https:\/\/(www\.viz\.com|books\.shueisha\.co\.jp)\//.test(arc.sourceUrl)));
+  assert.equal(arcs.length, 14);
+  for (const arc of arcs) {
+    assert.match(arc.artwork ?? "", /^\/images\/arcs\/.+\.(png|webp|avif|jpe?g)$/i);
+    assert.ok(existsSync(`public${arc.artwork}`), arc.name);
+  }
 });

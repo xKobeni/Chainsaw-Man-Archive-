@@ -19,6 +19,8 @@
 .artwork { position: relative; min-width: 0; aspect-ratio: 1.08; overflow: hidden; border-left: 7px solid var(--c); background: #242222; }
 .artwork::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,transparent 55%,rgba(0,0,0,.75)); pointer-events: none; }
 .artworkImage { object-fit: cover; object-position: center 48%; opacity: .82; }
+.artworkLoaded { opacity: 1; }
+.artworkContained { object-fit: contain; }
 .artwork figcaption { position: absolute; z-index: 1; inset: auto 22px 20px; display: flex; align-items: end; justify-content: space-between; gap: 12px; }
 .artwork figcaption span { font: clamp(80px,12vw,180px)/.8 var(--d); color: var(--c); }
 .artwork figcaption small { font: 11px var(--m); letter-spacing: .12em; text-align: right; }
@@ -26,6 +28,8 @@
 .kicker { color: var(--c); }
 .title { max-width: 100%; margin: 16px 0 17px; font: clamp(48px,6.3vw,112px)/.93 var(--d); text-transform: uppercase; letter-spacing: -.015em; overflow-wrap: normal; hyphens: none; }
 .synopsis { max-width: 50ch; font-size: clamp(15px,1.25vw,18px); line-height: 1.6; }
+.source { display: inline-flex; align-items: center; gap: 5px; margin-top: 16px; border-bottom: 1px solid var(--c); color: var(--c); font: 11px/1.5 var(--m); letter-spacing: .12em; }
+.source:hover,.source:focus-visible { color: var(--w); }
 .facts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin: 34px 0 24px; padding: 17px 0; border-block: 1px solid #504c49; }
 .facts div { display: grid; gap: 5px; }
 .facts span,.related h3 { color: var(--c); }

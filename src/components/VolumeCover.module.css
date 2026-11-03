@@ -1,5 +1,5 @@
-.cover { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; background: #e6e0d4; border: 1px solid #b7afa1; }
-.image { object-fit: cover; }
+.cover { position: relative; width: 100%; aspect-ratio: 0.635; overflow: hidden; background: #e6e0d4; border: 1px solid #b7afa1; }
+.image { object-fit: contain; }
 .pending { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 8%; color: #171513; }
 .pending span { font: 10px/1.4 var(--m); letter-spacing: .1em; }
 .pending strong { font: clamp(24px, 3vw, 48px)/.94 var(--d); letter-spacing: .02em; }
