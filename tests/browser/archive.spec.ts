@@ -67,14 +67,14 @@ test("part selection, profile relationships, modal keyboard focus and selection 
 
 test("supplied character portraits load in the index and profile", async ({ page }) => {
   await visit(page, "/characters");
-  for (const [id, file] of [["denji", "Denji"], ["pochita", "pochita"], ["power", "power"], ["himeno", "himeno"], ["kobeni", "kobeni"], ["reze", "reze"], ["kishibe", "kishebe"]]) {
+  for (const [id, file] of [["denji", "Denji"], ["pochita", "pochita"], ["makima", "makima"], ["power", "power"], ["aki", "aki"], ["himeno", "himeno"], ["kobeni", "kobeni"], ["reze", "reze"], ["kishibe", "kishebe"]]) {
     await page.locator(`#cl [data-character="${id}"]`).click();
     await expect(page.locator("#cst img")).toHaveAttribute("src", new RegExp(`${file}_char`));
     await expect.poll(() => page.locator("#cst img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   }
-  await page.locator('#cl [data-character="himeno"]').click();
+  await page.locator('#cl [data-character="makima"]').click();
   await page.getByRole("button", { name: "OPEN FILE" }).click();
-  await expect(page.locator("#pf img")).toHaveAttribute("src", /himeno_char/);
+  await expect(page.locator("#pf img")).toHaveAttribute("src", /makima_char/);
   await expect.poll(() => page.locator("#pf img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   await page.getByRole("button", { name: "Close character profile" }).click();
   await page.getByRole("button", { name: /^PART 2/ }).click();

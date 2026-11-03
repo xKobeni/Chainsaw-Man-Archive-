@@ -1,6 +1,6 @@
 # Artwork manifest
 
-The homepage uses the supplied `placeholders/poster1_landing.jpeg`, `placeholders/denji_landing.jpg`, and `placeholders/asa_landing.jpg` artwork. The character index and profiles use the supplied images for Denji, Pochita, Power, Himeno, Kobeni, Reze, Kishibe, and Yoshida. Characters without an image still use `placeholders/artwork.png`, a locally created geometric raster placeholder. The original SVG character has not been copied into the application.
+The homepage uses the supplied `placeholders/poster1_landing.jpeg`, `placeholders/denji_landing.jpg`, and `placeholders/asa_landing.jpg` artwork. The character index and profiles use the supplied images for Denji, Pochita, Makima, Power, Aki, Himeno, Kobeni, Reze, Kishibe, and Yoshida. Characters without an image still use `placeholders/artwork.png`, a locally created geometric raster placeholder. The original SVG character has not been copied into the application.
 
 The Story Arcs feature also uses this neutral raster placeholder and labels the missing arc illustration. No licensed arc illustrations were supplied.
 
@@ -8,8 +8,6 @@ For characters still missing artwork, add PNG, WebP, AVIF or JPG files and set e
 
 | Character | Recommended file |
 | --- | --- |
-| Makima | `public/images/characters/makima.webp` |
-| Aki Hayakawa | `public/images/characters/aki.webp` |
 | Asa Mitaka | `public/images/characters/asa.webp` |
 | Yoru | `public/images/characters/yoru.webp` |
 | Nayuta | `public/images/characters/nayuta.webp` |

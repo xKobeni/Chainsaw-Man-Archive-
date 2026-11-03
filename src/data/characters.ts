@@ -59,7 +59,7 @@ export const characters: Character[] = [
       "nayuta"
     ],
     "contracts": "Control Devil",
-    "artwork": null
+    "artwork": "/images/characters/makima_char.jpg"
   },
   {
     "id": "power",
@@ -99,7 +99,7 @@ export const characters: Character[] = [
       "himeno"
     ],
     "contracts": "Fox, Curse, Future Devils",
-    "artwork": null
+    "artwork": "/images/characters/aki_char.jpg"
   },
   {
     "id": "himeno",

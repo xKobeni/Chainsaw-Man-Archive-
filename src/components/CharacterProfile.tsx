@@ -22,7 +22,7 @@ export function CharacterProfile({ id, close }: { id: string | null; close: () =
     <button className="x" onClick={close} type="button" aria-label="Close character profile">CLOSE <X size={18} aria-hidden="true" /></button>
     {character && <div id="pc" key={character.id} className={styles.profile} style={colorStyle(character.color === "#111111" ? "#F0EEE8" : character.color)}>
       <div className={styles.hero}>
-        <figure className={styles.artwork} data-profile-art data-has-artwork={!!character.artwork}>
+        <figure className={styles.artwork} data-profile-art data-has-artwork={!!character.artwork} data-artwork-right={character.id === "kishibe" || undefined}>
           <CharacterArtwork name={character.name} src={character.artwork} priority sizes="(max-width: 760px) 95vw, 42vw" />
           <figcaption>PORTRAIT / {character.name.toUpperCase()}</figcaption>
         </figure>

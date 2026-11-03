@@ -50,7 +50,7 @@ export function CharactersExplorer() {
         <div id="cst" className={styles.spotlight} ref={root}>
           <div className={styles.spotlightHead}><span>SELECTED FILE / {selected.id.toUpperCase()}</span><span>PART {selected.parts.join(" + ")}</span></div>
           <div className={styles.spotlightBody}>
-            <figure className={styles.artwork} data-character-art data-has-artwork={!!selected.artwork}>
+            <figure className={styles.artwork} data-character-art data-has-artwork={!!selected.artwork} data-artwork-right={selected.id === "kishibe" || undefined}>
               <CharacterArtwork key={selected.id} name={selected.name} src={selected.artwork} priority sizes="(max-width: 760px) 90vw, 43vw" />
               <figcaption>PORTRAIT / {selected.name.toUpperCase()}</figcaption>
             </figure>
