@@ -1,9 +1,10 @@
 .artwork { position: relative; width: 100%; height: 100%; pointer-events: none; }
 .image { object-fit: contain; }
-.placeholder { position: absolute; inset: 0; background: url("/images/placeholders/artwork.png") center / contain no-repeat; opacity: .8; }
+.placeholder { position: absolute; inset: 0; background: url("/images/placeholders/artwork.png") center / contain no-repeat; opacity: .8; transition: opacity .35s ease-out; }
+.placeholderHidden { opacity: 0; }
 .placeholderImage { opacity: .8; }
 .imageLoading { opacity: 0; }
 .imageReady { opacity: 1; transition: opacity .35s ease-out; }
-@media (prefers-reduced-motion: reduce) { .imageReady { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .imageReady, .placeholder { transition: none; } }
 .caption { position: absolute; left: 12%; right: 12%; top: 48%; text-align: center; font: 11px/1.7 var(--m); letter-spacing: .15em; color: var(--w); background: var(--k); padding: 12px; }
 .caption strong { display: block; font: 28px var(--d); }

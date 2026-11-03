@@ -1,6 +1,7 @@
 .profile { padding: clamp(90px,13vh,150px) 5vw 8vh; }
 .hero { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: center; gap: clamp(30px,5vw,80px); min-height: min(78vh,780px); border-top: 5px solid var(--c); background: linear-gradient(110deg,#211b1a,#111 70%); }
 .artwork { position: relative; height: min(72vh,720px); min-height: 540px; overflow: hidden; background: #201d1c; }
+.artwork[data-has-artwork="true"] { background: #fff; }
 .artwork figcaption { position: absolute; bottom: 22px; left: 24px; z-index: 1; color: var(--c); font: 11px var(--m); letter-spacing: .16em; }
 .intro { min-width: 0; padding: 30px clamp(22px,3vw,45px) 30px 0; }
 .serial,.japanese { display: block; color: var(--c); font: 11px/1.5 var(--m); letter-spacing: .16em; }

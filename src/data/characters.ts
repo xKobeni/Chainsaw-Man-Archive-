@@ -21,7 +21,7 @@ export const characters: Character[] = [
       "nayuta"
     ],
     "contracts": "Chainsaw Devil",
-    "artwork": null
+    "artwork": "/images/characters/Denji_char.jpg"
   },
   {
     "id": "pochita",
@@ -39,7 +39,7 @@ export const characters: Character[] = [
       "makima"
     ],
     "contracts": "Chainsaw Devil",
-    "artwork": null
+    "artwork": "/images/characters/pochita_char.jpg"
   },
   {
     "id": "makima",
@@ -78,7 +78,7 @@ export const characters: Character[] = [
       "makima"
     ],
     "contracts": "Blood Fiend",
-    "artwork": null
+    "artwork": "/images/characters/power_char.jpg"
   },
   {
     "id": "aki",
@@ -95,10 +95,24 @@ export const characters: Character[] = [
       "denji",
       "power",
       "makima",
-      "kishibe"
+      "kishibe",
+      "himeno"
     ],
     "contracts": "Fox, Curse, Future Devils",
     "artwork": null
+  },
+  {
+    "id": "himeno",
+    "name": "Himeno",
+    "japanese": "姫野",
+    "parts": ["1"],
+    "role": "Devil Hunter · Public Safety",
+    "color": "#76736F",
+    "background": "A Public Safety Special Division 4 hunter and Aki Hayakawa’s partner.",
+    "powers": "Uses the Ghost Devil’s hand through her contract.",
+    "relationships": ["aki"],
+    "contracts": "Ghost Devil",
+    "artwork": "/images/characters/himeno_char.jpg"
   },
   {
     "id": "kobeni",
@@ -116,7 +130,7 @@ export const characters: Character[] = [
       "aki"
     ],
     "contracts": "—",
-    "artwork": null
+    "artwork": "/images/characters/kobeni_char.jpg"
   },
   {
     "id": "reze",
@@ -133,7 +147,7 @@ export const characters: Character[] = [
       "denji"
     ],
     "contracts": "Bomb Devil",
-    "artwork": null
+    "artwork": "/images/characters/reze_char.jpg"
   },
   {
     "id": "kishibe",
@@ -153,7 +167,7 @@ export const characters: Character[] = [
       "makima"
     ],
     "contracts": "—",
-    "artwork": null
+    "artwork": "/images/characters/kishebe_char.jpg"
   },
   {
     "id": "asa",
@@ -248,6 +262,6 @@ export const characters: Character[] = [
       "asa"
     ],
     "contracts": "—",
-    "artwork": null
+    "artwork": "/images/characters/yoshida_char.jpg"
   }
 ];

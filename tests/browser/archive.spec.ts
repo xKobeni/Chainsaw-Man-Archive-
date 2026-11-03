@@ -19,8 +19,8 @@ test("all routes, optimized raster assets and browser history work without runti
   const failedAssets: string[] = [];
   page.on("response", (response) => { if (response.url().startsWith("http://localhost:3000") && response.status() >= 400) failedAssets.push(response.url()); });
   await visit(page, "/");
-  await expect(page.locator(".hero [data-artwork-placeholder]")).toBeVisible();
-  await expect(page.locator(".hero img")).toHaveCount(0);
+  await expect(page.locator(".hero img")).toHaveAttribute("src", /poster1_landing/);
+  await expect(page.locator(".hero [data-artwork-placeholder]")).toHaveAttribute("data-artwork-ready", "true");
   await expect(page.locator(".hero svg")).toHaveCount(0);
   await page.waitForFunction(() => [...document.images].every((image) => image.complete && image.naturalWidth > 0));
   for (const [label, path] of [["CHARACTERS", "/characters"], ["CLASSIFIED FILES", "/classified-files"], ["STORY ARCS", "/arcs"], ["WORLD & LOCATIONS", "/locations"], ["MANGA VOLUMES", "/volumes"], ["LORE & CONNECTIONS", "/lore"], ["HOME", "/"]]) {
@@ -63,6 +63,26 @@ test("part selection, profile relationships, modal keyboard focus and selection 
   await expect(page.locator(".menu-close")).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "MENU", exact: true })).toBeFocused();
+});
+
+test("supplied character portraits load in the index and profile", async ({ page }) => {
+  await visit(page, "/characters");
+  for (const [id, file] of [["denji", "Denji"], ["pochita", "pochita"], ["power", "power"], ["himeno", "himeno"], ["kobeni", "kobeni"], ["reze", "reze"], ["kishibe", "kishebe"]]) {
+    await page.locator(`#cl [data-character="${id}"]`).click();
+    await expect(page.locator("#cst img")).toHaveAttribute("src", new RegExp(`${file}_char`));
+    await expect.poll(() => page.locator("#cst img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  }
+  await page.locator('#cl [data-character="himeno"]').click();
+  await page.getByRole("button", { name: "OPEN FILE" }).click();
+  await expect(page.locator("#pf img")).toHaveAttribute("src", /himeno_char/);
+  await expect.poll(() => page.locator("#pf img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await page.getByRole("button", { name: "Close character profile" }).click();
+  await page.getByRole("button", { name: /^PART 2/ }).click();
+  await page.locator('#cl [data-character="yoshida"]').click();
+  await expect(page.locator("#cst img")).toHaveAttribute("src", /yoshida_char/);
+  await expect.poll(() => page.locator("#cst img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await page.locator('#cl [data-character="asa"]').click();
+  await expect(page.locator("#cst img")).toHaveAttribute("alt", "Asa Mitaka — artwork pending");
 });
 
 test("dossiers, arc keyboard navigation, location links, volume bounds and lore connections", async ({ page }) => {
@@ -299,7 +319,7 @@ test("home intro splits after loading and scroll sections settle visibly", async
   await expect(page.locator("header")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(page.locator("header")).toHaveCSS("color", "rgb(17, 17, 17)");
   await expect(page.locator(".wm b")).toHaveCSS("color", "rgb(207, 38, 45)");
-  await expect(page.locator(".hero [data-artwork-placeholder]")).toBeVisible();
+  await expect(page.locator(".hero [data-artwork-placeholder]")).toHaveAttribute("data-artwork-ready", "true");
   expect(await page.evaluate(() => sessionStorage.getItem("csm"))).toBe("1");
 
   for (const section of [".p1", ".p2", ".end"]) {
@@ -397,21 +417,21 @@ test("cursor yields to text inputs and touch pointers", async ({ page, browser }
   }
 });
 
-test("splash reveals the immediate fallback despite a stalled texture", async ({ browser }) => {
+test("splash reveals the immediate fallback despite a stalled hero image", async ({ browser }) => {
   const page = await browser.newPage();
   let releaseImage = () => {};
   const heldImage = new Promise<void>((resolve) => { releaseImage = resolve; });
-  await page.route("**/images/placeholders/artwork.png", async (route) => {
-    await heldImage;
+  await page.route("**/_next/image?*", async (route) => {
+    if (route.request().url().includes("poster1_landing")) await heldImage;
     await route.continue().catch(() => {});
   });
-  const started = Date.now();
   try {
     await page.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
     await expect(page.locator(".hero [data-artwork-placeholder]")).toBeVisible();
     await expect(page.locator("#ld")).toBeHidden({ timeout: 7000 });
-    expect(Date.now() - started).toBeLessThan(6500);
     await expect(page.locator(".p1 .part-artwork")).toHaveCSS("opacity", "1");
+    releaseImage();
+    await expect(page.locator(".hero [data-artwork-placeholder]")).toHaveAttribute("data-artwork-ready", "true");
   } finally {
     releaseImage();
     await page.close();

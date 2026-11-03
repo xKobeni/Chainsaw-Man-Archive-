@@ -13,8 +13,8 @@ export function CharacterArtwork({ name, src, priority = false, fadeIn = false, 
   return <div className={styles.artwork}>
     {artworkSource ?
       <Image src={artworkSource} alt={name + " character artwork"} fill sizes={sizes} priority={priority} loading={priority ? "eager" : "lazy"} className={[styles.image, fadeIn ? loadedSource === artworkSource ? styles.imageReady : styles.imageLoading : ""].join(" ")} onLoad={() => setLoadedSource(artworkSource)} onError={() => setFailedSource(artworkSource)} /> :
-      immediateFallback ? <div className={styles.placeholder} data-artwork-placeholder aria-hidden="true" /> :
-        <Image src="/images/placeholders/artwork.png" alt={name + " — artwork pending"} fill sizes={sizes} priority={priority} loading={priority ? "eager" : "lazy"} className={[styles.image, styles.placeholderImage].join(" ")} />}
+      !immediateFallback && <Image src="/images/placeholders/artwork.png" alt={name + " — artwork pending"} fill sizes={sizes} priority={priority} loading={priority ? "eager" : "lazy"} className={[styles.image, styles.placeholderImage].join(" ")} />}
+    {immediateFallback && <div className={[styles.placeholder, artworkSource && loadedSource === artworkSource ? styles.placeholderHidden : ""].join(" ")} data-artwork-placeholder data-artwork-ready={artworkSource && loadedSource === artworkSource ? "true" : undefined} aria-hidden="true" />}
     {!artworkSource && <span className={styles.caption}><strong>{name}</strong>ARTWORK PENDING</span>}
   </div>;
 }

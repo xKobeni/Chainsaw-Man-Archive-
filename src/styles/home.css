@@ -6,8 +6,8 @@
 .hero .sun { position: absolute; z-index: 0; top: 10vh; left: 36vw; width: min(78vh,76vw); aspect-ratio: 1; border-radius: 50%; background: var(--r); }
 .hero .sun::after { content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: .22; background: radial-gradient(var(--k) 1px, transparent 2px) 0 0 / 9px 9px; mask-image: linear-gradient(110deg, transparent 10%, black 80%); }
 .hero-artwork { position: absolute; z-index: 3; left: 29%; bottom: -8vh; width: min(58vw,850px); height: 99vh; pointer-events: none; }
-.hero-artwork img { object-position: center bottom; }
-.hero-artwork [data-artwork-placeholder] { opacity: .28; mask-image: radial-gradient(ellipse 44% 55% at center,#000 15%,transparent 100%); }
+.hero-artwork img { object-fit: cover; object-position: center; mask-image: radial-gradient(ellipse 55% 68% at center,#000 38%,transparent 100%); }
+.hero-artwork [data-artwork-placeholder]:not([data-artwork-ready]) { opacity: .28; mask-image: radial-gradient(ellipse 44% 55% at center,#000 15%,transparent 100%); }
 .hero-artwork span { left: 50%; right: auto; top: 42%; width: max-content; max-width: 80%; padding: 10px 18px; transform: translateX(-50%); border-block: 1px solid var(--k); color: var(--k); background: var(--w); }
 .hero-artwork span strong { font-size: clamp(22px,2.5vw,36px); }
 .hero-slash { position: absolute; z-index: 1; left: -10%; top: 61%; width: 120%; height: 7px; background: var(--r); box-shadow: 0 0 0 3px var(--k); transform: rotate(-11deg); pointer-events: none; }
@@ -30,6 +30,7 @@
 .part-artwork { position: relative; width: min(100%, 540px); height: clamp(500px, 62vw, 720px); margin: 0; background: #211d1c; isolation: isolate; }
 .part-artwork::before { content: ""; position: absolute; z-index: -1; inset: -24px 24px 24px -24px; border: 1px solid var(--r); }
 .part-artwork::after { content: ""; position: absolute; inset: 14px; border: 1px solid #df8c3e80; pointer-events: none; }
+.part-artwork img { object-fit: cover; }
 .part-artwork figcaption { position: absolute; left: 18px; bottom: 16px; padding: 7px 9px; color: var(--w); background: var(--k); }
 .part-copy { min-width: 0; border-top: 1px solid currentColor; padding-top: 18px; }
 .part-kicker { display: block; margin-bottom: clamp(30px, 5vh, 65px); color: var(--o); }
@@ -66,6 +67,7 @@
 .end .btn:hover,.end .btn:focus-visible { background: var(--r); }
 .end-copy small { display: block; margin-top: 23px; }
 .end-artwork { position: relative; width: min(100%, 430px); height: min(60vw, 620px); min-height: 480px; margin: 0; background: var(--k); box-shadow: 22px 22px 0 var(--r); }
+.end-artwork img { object-fit: cover; }
 .end-artwork figcaption { position: absolute; left: 0; bottom: -48px; color: var(--r); }
 .end-footer { width: min(100%, 1450px); margin: 75px auto 0; display: flex; justify-content: space-between; gap: 18px; padding-top: 13px; border-top: 1px solid #6e6863; }
 @media (max-width: 1050px) {
